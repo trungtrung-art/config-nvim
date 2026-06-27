@@ -176,6 +176,8 @@ Useful commands:
 :TSUpdate
 :ConformInfo
 :Trouble diagnostics
+:Git
+:Git blame
 ```
 
 Recommended first-run checklist:
@@ -204,6 +206,8 @@ and Treesitter parsers are loaded from a clean session.
   them in Trouble.
 - Use `s` for Flash jump, `ys`/`ds`/`cs` for surround edits, and `af`/`if` or
   `ac`/`ic` for Treesitter textobjects.
+- Use `Space gs` for Git status, `Space gb` for file blame, and `Space gl` for
+  a compact Git log inside Neovim.
 
 ## Notes
 

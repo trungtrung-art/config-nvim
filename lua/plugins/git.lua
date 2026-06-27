@@ -27,6 +27,16 @@ return {
 		end,
 	},
 	{
+		"tpope/vim-fugitive",
+		cmd = { "Git", "G", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite" },
+		keys = {
+			{ "<leader>gs", "<cmd>Git<cr>", desc = "Git status" },
+			{ "<leader>gb", "<cmd>Git blame<cr>", desc = "Git blame" },
+			{ "<leader>gC", "<cmd>Git commit<cr>", desc = "Git commit" },
+			{ "<leader>gl", "<cmd>Git log --oneline --decorate --graph --all -n 30<cr>", desc = "Git log" },
+		},
+	},
+	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			current_line_blame = false,

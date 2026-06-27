@@ -97,6 +97,10 @@ Trong insert mode:
 | `Space gg` | Mo Git Graph |
 | `Space gc` | Nhay cwd vao Git root cua file hien tai |
 | `Space gw` | Xem cwd hien tai |
+| `Space gs` | Mo Fugitive Git status |
+| `Space gb` | Mo Fugitive Git blame |
+| `Space gC` | Mo Fugitive Git commit |
+| `Space gl` | Mo Git log ngan gon |
 | `Space gd` | Mo Diffview cho thay doi hien tai |
 | `Space gh` | Xem history cua file hien tai |
 | `Space gH` | Xem history cua repo |
@@ -107,6 +111,16 @@ Trong insert mode:
 | `Space hr` | Reset hunk |
 | `Space hp` | Preview hunk |
 | `Space hb` | Blame line |
+
+Trong Fugitive status:
+
+| Phim | Tac dung |
+| --- | --- |
+| `s` | Stage file/hunk duoi cursor |
+| `u` | Unstage file/hunk duoi cursor |
+| `cc` | Commit |
+| `dv` | Mo vertical diff |
+| `q` | Dong buffer |
 
 Trong Git Graph:
 
@@ -224,6 +238,8 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `:Mason` | Quan ly LSP/formatter/debugger |
 | `:checkhealth` | Kiem tra suc khoe config |
 | `:Neotree toggle left` | Bat/tat Neo-tree bang command |
+| `:Git` | Mo Fugitive Git status |
+| `:Git blame` | Mo blame cua file hien tai |
 
 ## Workflow Co Ban
 
