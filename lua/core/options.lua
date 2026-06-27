@@ -37,6 +37,14 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.swapfile = false
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.sessionoptions = {
+	"buffers",
+	"curdir",
+	"folds",
+	"help",
+	"tabpages",
+	"winsize",
+}
 
 if os.is_wsl and os.executable("win32yank.exe") then
 	vim.g.clipboard = {

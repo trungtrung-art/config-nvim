@@ -51,6 +51,19 @@ Lenh Vim tuong duong:
 | `:bprev` | Buffer truoc |
 | `:Bdelete` | Dong buffer hien tai, it bi vang khoi layout hon `:bd` |
 
+## Session Va Project
+
+Session luu buffer, tab, window layout va cwd theo project. Config nay tu luu
+session khi thoat Neovim sau khi anh da mo file, nhung khong tu restore khi mo
+Neovim de tranh mo nham workspace.
+
+| Phim | Tac dung |
+| --- | --- |
+| `Space ss` | Restore session cua cwd hien tai |
+| `Space sS` | Chon session de restore |
+| `Space sl` | Restore session gan nhat |
+| `Space sd` | Dung luu session cho lan hien tai |
+
 ## LSP: Di Chuyen Va Sua Code
 
 | Phim | Tac dung |
@@ -273,9 +286,10 @@ Lua chon debug hien co:
 
 1. Mo terminal moi.
 2. Chay `nvim .` trong thu muc project.
-3. Nhan `Space v` de mo folder tree.
-4. Nhan `Space ff` de tim file nhanh.
-5. Nhan `Space fg` de search text trong project.
-6. Trong file code, dung `gd`, `K`, `Space ca`, `Space rn`, `Space p`.
-7. Nhan `Space tt` de mo terminal tich hop.
-8. Dung `:Mason` neu can cai them language server.
+3. Nhan `Space ss` neu muon restore session cua project.
+4. Nhan `Space v` de mo folder tree.
+5. Nhan `Space ff` de tim file nhanh.
+6. Nhan `Space fg` de search text trong project.
+7. Trong file code, dung `gd`, `K`, `Space ca`, `Space rn`, `Space p`.
+8. Nhan `Space tt` de mo terminal tich hop.
+9. Dung `:Mason` neu can cai them language server.

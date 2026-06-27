@@ -2,7 +2,7 @@
 
 Personal Neovim configuration focused on frontend development, Git workflows,
 LSP, formatting, Treesitter, Telescope, navigation, terminal usage, and
-cross-platform use.
+session restore, terminal usage, and cross-platform use.
 
 ## Status
 
@@ -153,6 +153,32 @@ The config includes lightweight OS detection in `lua/core/os.lua`.
 - Inline image preview uses WezTerm `imgcat` when the `wezterm` CLI is
   available, otherwise it opens the image with the operating system.
 
+## Sessions
+
+Project sessions are managed by `persistence.nvim`.
+
+- Sessions are saved automatically when Neovim exits after a real file has been
+  opened.
+- Sessions are not restored automatically, so opening a single file stays
+  predictable.
+- Session files live under Neovim's state directory, not in this repository.
+
+Common keymaps:
+
+- `Space ss` restores the session for the current working directory.
+- `Space sS` opens a session picker.
+- `Space sl` restores the last session.
+- `Space sd` stops saving the current session.
+
+Recommended project workflow:
+
+```bash
+cd path/to/project
+nvim .
+```
+
+Then press `Space ss` if you want to restore the saved project layout.
+
 ## First Run
 
 Open Neovim and let lazy.nvim install plugins:
@@ -236,6 +262,9 @@ node --inspect-brk app.js
   a compact Git log inside Neovim.
 - If JavaScript debugging fails after a fresh clone, run `:MasonToolsInstall`
   and confirm `js-debug-adapter` is installed in `:Mason`.
+- If a restored session opens an old layout, start Neovim in the project root
+  with `nvim .`, then use `Space ss` for that cwd or `Space sS` to pick another
+  session.
 
 ## Notes
 
