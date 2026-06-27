@@ -48,6 +48,19 @@ Clone this repository into the standard XDG config directory:
 git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
 ```
 
+## tmux
+
+This repository includes a tmux config at `tmux/.tmux.conf`.
+
+On macOS, Linux, or WSL:
+
+```bash
+ln -s ~/.config/nvim/tmux/.tmux.conf ~/.tmux.conf
+```
+
+The tmux config uses `Ctrl-a` as the prefix and supports `Ctrl-h/j/k/l`
+navigation between tmux panes and Neovim splits.
+
 ## First Run
 
 Open Neovim and let lazy.nvim install plugins:
