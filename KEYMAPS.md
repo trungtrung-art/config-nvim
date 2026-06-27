@@ -293,6 +293,8 @@ Config nay dung Neotest cho Jest va Vitest.
 | `:Lazy` | Quan ly plugin |
 | `:Mason` | Quan ly LSP/formatter/debugger |
 | `:checkhealth` | Kiem tra suc khoe config |
+| `:checkhealth config` | Kiem tra rieng bo config nay |
+| `:NvimConfigCheck` | Alias de chay `:checkhealth config` |
 | `:Neotree toggle left` | Bat/tat Neo-tree bang command |
 | `:Git` | Mo Fugitive Git status |
 | `:Git blame` | Mo blame cua file hien tai |
@@ -310,4 +312,5 @@ Config nay dung Neotest cho Jest va Vitest.
 7. Trong file code, dung `gd`, `K`, `Space ca`, `Space rn`, `Space p`.
 8. Nhan `Space tt` de mo terminal tich hop.
 9. Trong file test, dung `Space nn` hoac `Space nf` de chay test.
-10. Dung `:Mason` neu can cai them language server.
+10. Dung `:NvimConfigCheck` neu muon kiem tra may moi thieu gi.
+11. Dung `:Mason` neu can cai them language server.

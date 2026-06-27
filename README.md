@@ -206,6 +206,7 @@ Useful commands:
 :Git blame
 :DapContinue
 :DapToggleBreakpoint
+:NvimConfigCheck
 ```
 
 Recommended first-run checklist:
@@ -215,11 +216,40 @@ Recommended first-run checklist:
 :MasonToolsInstall
 :TSUpdate
 :ConformInfo
+:NvimConfigCheck
 :checkhealth
 ```
 
 Restart Neovim after the first install pass so all language servers, formatters,
 and Treesitter parsers are loaded from a clean session.
+
+## Bootstrap Check
+
+This config adds a focused health provider for new machines.
+
+Run:
+
+```vim
+:NvimConfigCheck
+```
+
+This is an alias for:
+
+```vim
+:checkhealth config
+```
+
+It checks:
+
+- Neovim version.
+- Required executables such as Git, Node.js, npm, Python, ripgrep, fd, and
+  unzip.
+- Optional executables such as tmux and WezTerm.
+- OS-specific helpers for Windows, WSL, macOS, and Linux.
+- Mason packages used by LSP, formatting, debugging, and JS/TS tooling.
+- Treesitter parsers used by this config.
+- Current project context, including Git root and Jest/Vitest signals when
+  `package.json` exists.
 
 ## Debugging
 
@@ -297,6 +327,9 @@ the whole file.
 - If Neotest finds no JS/TS tests, confirm the project has `jest` or `vitest`
   installed and that the Treesitter JavaScript/TypeScript parsers are installed
   with `:TSUpdate`.
+- If something feels broken after cloning to a new machine, run
+  `:NvimConfigCheck` first and fix the reported missing executable, Mason tool,
+  or Treesitter parser.
 - If a restored session opens an old layout, start Neovim in the project root
   with `nvim .`, then use `Space ss` for that cwd or `Space sS` to pick another
   session.
