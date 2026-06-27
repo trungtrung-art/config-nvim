@@ -269,6 +269,23 @@ Lua chon debug hien co:
 | `Attach to Node process` | Attach vao process Node dang chay voi inspect |
 | `Launch Chrome against localhost` | Mo Chrome debug cho frontend localhost |
 
+## Test JavaScript/TypeScript
+
+Config nay dung Neotest cho Jest va Vitest.
+
+| Phim | Tac dung |
+| --- | --- |
+| `Space nn` | Chay test gan cursor nhat |
+| `Space nf` | Chay test file hien tai |
+| `Space nA` | Chay tat ca test trong cwd |
+| `Space nl` | Chay lai test gan nhat |
+| `Space nd` | Debug test gan cursor nhat bang DAP |
+| `Space ns` | Bat/tat test summary |
+| `Space no` | Mo output cua test gan nhat |
+| `Space nO` | Bat/tat output panel |
+| `Space nx` | Dung test gan nhat |
+| `Space nw` | Bat/tat watch test file hien tai |
+
 ## Lenh Hay Dung
 
 | Lenh | Tac dung |
@@ -292,4 +309,5 @@ Lua chon debug hien co:
 6. Nhan `Space fg` de search text trong project.
 7. Trong file code, dung `gd`, `K`, `Space ca`, `Space rn`, `Space p`.
 8. Nhan `Space tt` de mo terminal tich hop.
-9. Dung `:Mason` neu can cai them language server.
+9. Trong file test, dung `Space nn` hoac `Space nf` de chay test.
+10. Dung `:Mason` neu can cai them language server.

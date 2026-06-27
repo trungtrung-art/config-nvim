@@ -1,8 +1,8 @@
 # Neovim Config
 
 Personal Neovim configuration focused on frontend development, Git workflows,
-LSP, formatting, Treesitter, Telescope, navigation, terminal usage, and
-session restore, terminal usage, and cross-platform use.
+LSP, formatting, Treesitter, Telescope, navigation, tests, debugging, session
+restore, terminal usage, and cross-platform use.
 
 ## Status
 
@@ -245,6 +245,38 @@ For attach debugging, start Node with an inspect flag first, for example:
 node --inspect-brk app.js
 ```
 
+## Testing
+
+JavaScript and TypeScript test running is configured through Neotest with Jest
+and Vitest adapters.
+
+Supported project runners:
+
+- Jest projects with `jest` installed or exposed through the project test
+  script.
+- Vitest projects with `vitest` installed.
+
+Common keymaps:
+
+- `Space nn` runs the nearest test.
+- `Space nf` runs the current test file.
+- `Space nA` runs all tests in the current working directory.
+- `Space nl` runs the last test again.
+- `Space nd` debugs the nearest test through DAP when the adapter supports it.
+- `Space ns` toggles the test summary.
+- `Space no` opens focused output for a test.
+- `Space nO` toggles the output panel.
+
+Recommended workflow:
+
+```bash
+cd path/to/project
+nvim .
+```
+
+Open a test file, then press `Space nn` for the nearest test or `Space nf` for
+the whole file.
+
 ## Troubleshooting
 
 - If Telescope live grep fails, install `ripgrep`.
@@ -262,6 +294,9 @@ node --inspect-brk app.js
   a compact Git log inside Neovim.
 - If JavaScript debugging fails after a fresh clone, run `:MasonToolsInstall`
   and confirm `js-debug-adapter` is installed in `:Mason`.
+- If Neotest finds no JS/TS tests, confirm the project has `jest` or `vitest`
+  installed and that the Treesitter JavaScript/TypeScript parsers are installed
+  with `:TSUpdate`.
 - If a restored session opens an old layout, start Neovim in the project root
   with `nvim .`, then use `Space ss` for that cwd or `Space sS` to pick another
   session.
