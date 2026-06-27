@@ -41,6 +41,7 @@ return {
 				"black",
 				"isort",
 				"gofumpt",
+				"js-debug-adapter",
 			},
 			auto_update = false,
 			run_on_start = true,

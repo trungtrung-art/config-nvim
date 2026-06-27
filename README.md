@@ -29,7 +29,7 @@ Optional but recommended:
 
 Mason installs the configured language servers and formatters on first run where
 possible, including Lua, TypeScript, HTML, CSS, Tailwind, JSON, Python, ESLint,
-Stylua, Prettier, Black, isort, and gofumpt.
+Stylua, Prettier, Black, isort, gofumpt, and the JavaScript debug adapter.
 
 ## Install
 
@@ -178,6 +178,8 @@ Useful commands:
 :Trouble diagnostics
 :Git
 :Git blame
+:DapContinue
+:DapToggleBreakpoint
 ```
 
 Recommended first-run checklist:
@@ -192,6 +194,30 @@ Recommended first-run checklist:
 
 Restart Neovim after the first install pass so all language servers, formatters,
 and Treesitter parsers are loaded from a clean session.
+
+## Debugging
+
+JavaScript and TypeScript debugging is configured through `nvim-dap`,
+`nvim-dap-ui`, and Mason's `js-debug-adapter`.
+
+Supported debug entries:
+
+- `Launch current file` for Node-based JS/TS files.
+- `Attach to Node process` for processes started with Node inspect flags.
+- `Launch Chrome against localhost` for frontend apps such as Vite or Next.js.
+
+Common keymaps:
+
+- `Space db` toggles a breakpoint.
+- `Space dc` starts or continues a debug session.
+- `Space du` toggles the debug UI.
+- `Space dt` terminates the current session.
+
+For attach debugging, start Node with an inspect flag first, for example:
+
+```bash
+node --inspect-brk app.js
+```
 
 ## Troubleshooting
 
@@ -208,6 +234,8 @@ and Treesitter parsers are loaded from a clean session.
   `ac`/`ic` for Treesitter textobjects.
 - Use `Space gs` for Git status, `Space gb` for file blame, and `Space gl` for
   a compact Git log inside Neovim.
+- If JavaScript debugging fails after a fresh clone, run `:MasonToolsInstall`
+  and confirm `js-debug-adapter` is installed in `:Mason`.
 
 ## Notes
 

@@ -230,6 +230,32 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `]m` / `[m` | Nhay toi function tiep theo/truoc do |
 | `]]` / `[[` | Nhay toi class tiep theo/truoc do |
 
+## Debug JavaScript/TypeScript
+
+| Phim | Tac dung |
+| --- | --- |
+| `Space db` | Toggle breakpoint |
+| `Space dB` | Dat conditional breakpoint |
+| `Space dL` | Dat log point |
+| `Space dc` | Start/continue debug |
+| `Space do` | Step over |
+| `Space di` | Step into |
+| `Space dO` | Step out |
+| `Space dp` | Pause debug |
+| `Space dt` | Terminate debug |
+| `Space dl` | Chay lai cau hinh debug gan nhat |
+| `Space dr` | Mo debug REPL |
+| `Space du` | Bat/tat debug UI |
+| `Space de` | Eval expression duoi cursor hoac visual selection |
+
+Lua chon debug hien co:
+
+| Lua chon | Tac dung |
+| --- | --- |
+| `Launch current file` | Chay file JS/TS hien tai bang Node debugger |
+| `Attach to Node process` | Attach vao process Node dang chay voi inspect |
+| `Launch Chrome against localhost` | Mo Chrome debug cho frontend localhost |
+
 ## Lenh Hay Dung
 
 | Lenh | Tac dung |
@@ -240,6 +266,8 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `:Neotree toggle left` | Bat/tat Neo-tree bang command |
 | `:Git` | Mo Fugitive Git status |
 | `:Git blame` | Mo blame cua file hien tai |
+| `:DapContinue` | Start/continue debug session |
+| `:DapToggleBreakpoint` | Toggle breakpoint |
 
 ## Workflow Co Ban
 
