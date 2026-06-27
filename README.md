@@ -173,6 +173,7 @@ Useful commands:
 :Mason
 :MasonToolsInstall
 :TSUpdate
+:ConformInfo
 ```
 
 Recommended first-run checklist:
@@ -181,6 +182,7 @@ Recommended first-run checklist:
 :Lazy sync
 :MasonToolsInstall
 :TSUpdate
+:ConformInfo
 :checkhealth
 ```
 
@@ -192,8 +194,8 @@ and Treesitter parsers are loaded from a clean session.
 - If Telescope live grep fails, install `ripgrep`.
 - If Telescope find files is slow or missing results, install `fd`.
 - If Treesitter parser installation fails, install a C compiler toolchain.
-- If formatting does nothing, open `:Mason` and confirm the formatter is
-  installed.
+- If formatting does nothing, open `:ConformInfo` and confirm the formatter is
+  available. Then open `:Mason` and confirm the formatter is installed.
 - If clipboard does not work in WSL, install `win32yank.exe` and restart
   Neovim.
 
