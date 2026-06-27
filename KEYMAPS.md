@@ -197,9 +197,24 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | --- | --- |
 | `gcc` | Comment/uncomment dong hien tai |
 | `gc` trong visual mode | Comment/uncomment vung chon |
+| `ys{motion}{char}` | Them surround theo motion, vi du `ysiw"` |
+| `S{char}` trong visual mode | Them surround cho vung chon |
+| `ds{char}` | Xoa surround, vi du `ds"` |
+| `cs{old}{new}` | Doi surround, vi du `cs"'` |
 | `J` trong visual mode | Di chuyen dong dang chon xuong |
 | `K` trong visual mode | Di chuyen dong dang chon len |
 | `Space p` trong visual mode | Paste de len vung chon ma khong mat clipboard |
+
+## Navigation Nang Cao
+
+| Phim | Tac dung |
+| --- | --- |
+| `s` | Flash jump toi match nhanh |
+| `Space S` | Flash Treesitter node |
+| `af` / `if` | Chon around/inside function trong visual/operator mode |
+| `ac` / `ic` | Chon around/inside class trong visual/operator mode |
+| `]m` / `[m` | Nhay toi function tiep theo/truoc do |
+| `]]` / `[[` | Nhay toi class tiep theo/truoc do |
 
 ## Lenh Hay Dung
 

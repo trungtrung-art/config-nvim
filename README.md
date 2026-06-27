@@ -1,7 +1,8 @@
 # Neovim Config
 
 Personal Neovim configuration focused on frontend development, Git workflows,
-LSP, formatting, Treesitter, Telescope, terminal usage, and cross-platform use.
+LSP, formatting, Treesitter, Telescope, navigation, terminal usage, and
+cross-platform use.
 
 ## Status
 
@@ -201,6 +202,8 @@ and Treesitter parsers are loaded from a clean session.
   Neovim.
 - If diagnostics feel noisy inline, use `Space ld` or `Space lD` to inspect
   them in Trouble.
+- Use `s` for Flash jump, `ys`/`ds`/`cs` for surround edits, and `af`/`if` or
+  `ac`/`ic` for Treesitter textobjects.
 
 ## Notes
 
