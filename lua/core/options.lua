@@ -1,5 +1,17 @@
 local os = require("core.os")
 
+if os.is_windows then
+	local shell = os.first_executable({ "pwsh", "powershell" })
+	if shell then
+		vim.opt.shell = shell
+		vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+		vim.opt.shellquote = ""
+		vim.opt.shellxquote = ""
+		vim.opt.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+		vim.opt.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+	end
+end
+
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

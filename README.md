@@ -61,6 +61,21 @@ ln -s ~/.config/nvim/tmux/.tmux.conf ~/.tmux.conf
 The tmux config uses `Ctrl-a` as the prefix and supports `Ctrl-h/j/k/l`
 navigation between tmux panes and Neovim splits.
 
+## Cross-platform behavior
+
+The config includes lightweight OS detection in `lua/core/os.lua`.
+
+- Windows native prefers PowerShell Core (`pwsh`) when available, then Windows
+  PowerShell.
+- WSL uses `win32yank.exe` for clipboard integration when it is installed.
+- Image opening uses OS-specific open commands when available:
+  - Windows: `cmd.exe /c start`
+  - WSL: `wslview` or `explorer.exe`
+  - macOS: `open`
+  - Linux: `xdg-open`
+- Inline image preview uses WezTerm `imgcat` when the `wezterm` CLI is
+  available, otherwise it opens the image with the operating system.
+
 ## First Run
 
 Open Neovim and let lazy.nvim install plugins:

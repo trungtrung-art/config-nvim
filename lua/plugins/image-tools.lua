@@ -4,6 +4,8 @@ return {
 		dir = vim.fn.stdpath("config"),
 		lazy = false,
 		config = function()
+			local opener = require("core.open")
+
 			local image_exts = {
 				avif = true,
 				bmp = true,
@@ -54,7 +56,7 @@ return {
 					return
 				end
 
-				vim.ui.open(path)
+				opener.open_path(path)
 			end
 
 			local function preview_image()
@@ -64,15 +66,16 @@ return {
 					return
 				end
 
-				if vim.fn.executable("wezterm") ~= 1 then
+				local command = opener.wezterm_imgcat_command(path)
+				if not command then
 					vim.notify("Khong tim thay wezterm CLI, dang mo bang app mac dinh", vim.log.levels.WARN)
-					vim.ui.open(path)
+					opener.open_path(path)
 					return
 				end
 
 				vim.cmd("botright split")
 				vim.cmd("resize 24")
-				vim.cmd("terminal wezterm imgcat --width 100% --height 95% --hold " .. vim.fn.shellescape(path))
+				vim.cmd("terminal " .. command)
 				vim.cmd("startinsert")
 			end
 

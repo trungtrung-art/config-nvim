@@ -10,4 +10,14 @@ function M.executable(name)
 	return vim.fn.executable(name) == 1
 end
 
+function M.first_executable(candidates)
+	for _, candidate in ipairs(candidates) do
+		if M.executable(candidate) then
+			return candidate
+		end
+	end
+
+	return nil
+end
+
 return M
