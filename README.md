@@ -34,18 +34,94 @@ Stylua, Prettier, Black, isort, and gofumpt.
 
 ### Windows native
 
-Clone this repository into the standard Neovim config directory:
+Install dependencies with `winget`:
+
+```powershell
+winget install Neovim.Neovim Git.Git OpenJS.NodeJS Python.Python.3.12 BurntSushi.ripgrep.MSVC sharkdp.fd wez.wezterm
+```
+
+Install a C compiler for Treesitter parsers. LLVM is a reasonable default:
+
+```powershell
+winget install LLVM.LLVM
+```
+
+Clone this repository into the standard Windows Neovim config directory:
 
 ```powershell
 git clone https://github.com/trungtrung-art/config-nvim.git $env:LOCALAPPDATA\nvim
 ```
 
-### macOS or Linux
+### WSL or Ubuntu Linux
 
-Clone this repository into the standard XDG config directory:
+Install dependencies:
+
+```bash
+sudo apt update
+sudo apt install -y git curl unzip build-essential ripgrep fd-find nodejs npm python3 python3-pip tmux
+```
+
+Ubuntu names `fd` as `fdfind`. Create a local shim if `fd` is missing:
+
+```bash
+mkdir -p ~/.local/bin
+ln -s "$(command -v fdfind)" ~/.local/bin/fd
+```
+
+Make sure `~/.local/bin` is in `PATH`:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
+
+Install Neovim 0.11 or newer from the official release, a PPA, or another
+package source. Then clone this repository:
 
 ```bash
 git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
+```
+
+Optional WSL clipboard support:
+
+```bash
+curl -L -o /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip
+unzip /tmp/win32yank.zip -d ~/.local/bin
+chmod +x ~/.local/bin/win32yank.exe
+```
+
+### macOS
+
+Install dependencies with Homebrew:
+
+```bash
+brew install neovim git node python ripgrep fd tmux unzip
+```
+
+Install Apple command line tools if Treesitter parsers fail to build:
+
+```bash
+xcode-select --install
+```
+
+Clone this repository into the standard XDG Neovim config directory:
+
+```bash
+git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
+```
+
+### Existing config backup
+
+If the target config directory already exists, back it up before cloning:
+
+```bash
+mv ~/.config/nvim ~/.config/nvim.backup
+```
+
+On Windows:
+
+```powershell
+$nvimConfig = Join-Path $env:LOCALAPPDATA "nvim"
+Rename-Item $nvimConfig "$nvimConfig.backup"
 ```
 
 ## tmux
@@ -98,6 +174,28 @@ Useful commands:
 :MasonToolsInstall
 :TSUpdate
 ```
+
+Recommended first-run checklist:
+
+```vim
+:Lazy sync
+:MasonToolsInstall
+:TSUpdate
+:checkhealth
+```
+
+Restart Neovim after the first install pass so all language servers, formatters,
+and Treesitter parsers are loaded from a clean session.
+
+## Troubleshooting
+
+- If Telescope live grep fails, install `ripgrep`.
+- If Telescope find files is slow or missing results, install `fd`.
+- If Treesitter parser installation fails, install a C compiler toolchain.
+- If formatting does nothing, open `:Mason` and confirm the formatter is
+  installed.
+- If clipboard does not work in WSL, install `win32yank.exe` and restart
+  Neovim.
 
 ## Notes
 
