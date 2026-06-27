@@ -23,6 +23,31 @@ return {
 			})
 		end,
 	},
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = {
+				"lua-language-server",
+				"typescript-language-server",
+				"html-lsp",
+				"css-lsp",
+				"tailwindcss-language-server",
+				"json-lsp",
+				"pyright",
+				"eslint-lsp",
+				"stylua",
+				"prettier",
+				"black",
+				"isort",
+				"gofumpt",
+			},
+			auto_update = false,
+			run_on_start = true,
+			start_delay = 3000,
+			debounce_hours = 24,
+		},
+	},
 
 	{
 		"neovim/nvim-lspconfig",

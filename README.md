@@ -26,6 +26,10 @@ Optional but recommended:
 - tmux
 - WezTerm
 
+Mason installs the configured language servers and formatters on first run where
+possible, including Lua, TypeScript, HTML, CSS, Tailwind, JSON, Python, ESLint,
+Stylua, Prettier, Black, isort, and gofumpt.
+
 ## Install
 
 ### Windows native
@@ -63,6 +67,7 @@ Useful commands:
 ```vim
 :Lazy
 :Mason
+:MasonToolsInstall
 :TSUpdate
 ```
 
