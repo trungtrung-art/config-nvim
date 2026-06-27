@@ -21,6 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 require("core.options")
 require("core.keymaps")
 require("core.notifications")
+pcall(require, "local")
 
 require("lazy").setup("plugins", {
 	rocks = { enabled = false },

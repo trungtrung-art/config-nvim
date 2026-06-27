@@ -1,0 +1,7 @@
+-- Copy this file to lua/local.lua for machine-specific settings.
+-- lua/local.lua is ignored by Git and should not be committed.
+
+-- Examples:
+-- vim.opt.shell = "pwsh"
+-- vim.opt.clipboard = "unnamedplus"
+-- vim.g.neovide_scale_factor = 1.0

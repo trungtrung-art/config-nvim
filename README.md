@@ -5,8 +5,8 @@ LSP, formatting, Treesitter, Telescope, terminal usage, and cross-platform use.
 
 ## Status
 
-This config currently works on Windows native Neovim. The next goal is to make
-it portable across Windows/WSL and macOS, then add tmux integration.
+This config currently works on Windows native Neovim and is being hardened for
+Windows/WSL, macOS, and Linux portability. tmux support is included but optional.
 
 ## Requirements
 
@@ -87,6 +87,6 @@ Useful commands:
 ## Notes
 
 - `lazy-lock.json` is committed to keep plugin versions stable across machines.
-- Local machine-specific settings should go in ignored local files, not in the
-  shared config.
-- tmux support will be added after the base config is made portable.
+- Local machine-specific settings should go in `lua/local.lua`, not in the
+  shared config. Copy `lua/local.lua.example` to `lua/local.lua` when needed.
+- `.editorconfig` and `.stylua.toml` keep formatting stable across machines.
