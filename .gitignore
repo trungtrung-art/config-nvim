@@ -1,0 +1,21 @@
+# Local machine overrides
+lua/local.lua
+lua/config/local.lua
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Neovim runtime artifacts
+*.swp
+*.swo
+*.tmp
+Session.vim
+
+# Logs and caches
+*.log
+.cache/
+
+# Local environment files
+.env
+.env.*
