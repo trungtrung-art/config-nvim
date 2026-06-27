@@ -243,7 +243,7 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `]m` / `[m` | Nhay toi function tiep theo/truoc do |
 | `]]` / `[[` | Nhay toi class tiep theo/truoc do |
 
-## Debug JavaScript/TypeScript
+## Debug
 
 | Phim | Tac dung |
 | --- | --- |
@@ -263,6 +263,8 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `Space dPm` | Debug Python method gan cursor |
 | `Space dPc` | Debug Python class gan cursor |
 | `Space dPs` | Debug Python visual selection |
+| `Space dGt` | Debug Go test gan cursor |
+| `Space dGl` | Debug lai Go test gan nhat |
 
 Lua chon debug hien co:
 
@@ -272,6 +274,7 @@ Lua chon debug hien co:
 | `Attach to Node process` | Attach vao process Node dang chay voi inspect |
 | `Launch Chrome against localhost` | Mo Chrome debug cho frontend localhost |
 | Python launch entries | Chay file Python hien tai bang debugpy |
+| Go launch and test entries | Chay/debug Go bang Delve |
 
 ## Test JavaScript/TypeScript
 

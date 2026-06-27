@@ -247,4 +247,33 @@ return {
 			})
 		end,
 	},
+	{
+		"leoluz/nvim-dap-go",
+		ft = "go",
+		dependencies = { "mfussenegger/nvim-dap" },
+		keys = {
+			{
+				"<leader>dGt",
+				function()
+					require("dap-go").debug_test()
+				end,
+				desc = "Debug Go nearest test",
+			},
+			{
+				"<leader>dGl",
+				function()
+					require("dap-go").debug_last_test()
+				end,
+				desc = "Debug Go last test",
+			},
+		},
+		config = function()
+			require("dap-go").setup({
+				delve = {
+					path = mason_bin("dlv"),
+					detached = vim.fn.has("win32") == 0,
+				},
+			})
+		end,
+	},
 }

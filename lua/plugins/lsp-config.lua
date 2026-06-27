@@ -1,3 +1,15 @@
+local function extend(list, items)
+	for _, item in ipairs(items) do
+		table.insert(list, item)
+	end
+
+	return list
+end
+
+local function has_go()
+	return vim.fn.executable("go") == 1
+end
+
 return {
 	{
 		"williamboman/mason.nvim",
@@ -8,17 +20,23 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
+			local ensure_installed = {
+				"lua_ls",
+				"ts_ls",
+				"html",
+				"cssls",
+				"tailwindcss",
+				"jsonls",
+				"pyright",
+				"eslint",
+			}
+
+			if has_go() then
+				table.insert(ensure_installed, "gopls")
+			end
+
 			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"ts_ls",
-					"html",
-					"cssls",
-					"tailwindcss",
-					"jsonls",
-					"pyright",
-					"eslint",
-				},
+				ensure_installed = ensure_installed,
 				automatic_enable = true,
 			})
 		end,
@@ -26,8 +44,8 @@ return {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = { "williamboman/mason.nvim" },
-		opts = {
-			ensure_installed = {
+		opts = function()
+			local ensure_installed = {
 				"lua-language-server",
 				"typescript-language-server",
 				"html-lsp",
@@ -40,15 +58,25 @@ return {
 				"prettier",
 				"black",
 				"isort",
-				"gofumpt",
 				"js-debug-adapter",
 				"debugpy",
-			},
-			auto_update = false,
-			run_on_start = true,
-			start_delay = 3000,
-			debounce_hours = 24,
-		},
+			}
+
+			if has_go() then
+				extend(ensure_installed, {
+					"gofumpt",
+					"delve",
+				})
+			end
+
+			return {
+				ensure_installed = ensure_installed,
+				auto_update = false,
+				run_on_start = true,
+				start_delay = 3000,
+				debounce_hours = 24,
+			}
+		end,
 	},
 
 	{
@@ -76,6 +104,7 @@ return {
 				jsonls = {},
 				pyright = {},
 				eslint = {},
+				gopls = {},
 			}
 
 			for name, config in pairs(servers) do

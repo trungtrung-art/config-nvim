@@ -24,13 +24,15 @@ Install these tools before starting Neovim on a fresh machine:
 
 Optional but recommended:
 
+- Go, if you work on Go projects
 - tmux
 - WezTerm
 
 Mason installs the configured language servers, formatters, and debug adapters
 on first run where possible, including Lua, TypeScript, HTML, CSS, Tailwind,
-JSON, Python, ESLint, Stylua, Prettier, Black, isort, gofumpt, the JavaScript
-debug adapter, and debugpy.
+JSON, Python, ESLint, Stylua, Prettier, Black, isort, the JavaScript debug
+adapter, and debugpy. If `go` is available in `PATH`, Mason also installs
+`gopls`, `gofumpt`, and Delve.
 
 ## Install
 
@@ -245,7 +247,7 @@ It checks:
 - Neovim version.
 - Required executables such as Git, Node.js, npm, Python, ripgrep, fd, and
   unzip.
-- Optional executables such as tmux and WezTerm.
+- Optional executables such as Go, tmux, and WezTerm.
 - OS-specific helpers for Windows, WSL, macOS, and Linux.
 - Mason packages used by LSP, formatting, debugging, and JS/TS tooling.
 - Treesitter parsers used by this config.
@@ -254,8 +256,9 @@ It checks:
 
 ## Debugging
 
-JavaScript, TypeScript, and Python debugging is configured through `nvim-dap`,
-`nvim-dap-ui`, Mason's `js-debug-adapter`, and Mason's `debugpy`.
+JavaScript, TypeScript, Python, and Go debugging is configured through
+`nvim-dap`, `nvim-dap-ui`, Mason's `js-debug-adapter`, Mason's `debugpy`, and
+Delve.
 
 Supported debug entries:
 
@@ -263,6 +266,7 @@ Supported debug entries:
 - `Attach to Node process` for processes started with Node inspect flags.
 - `Launch Chrome against localhost` for frontend apps such as Vite or Next.js.
 - Python launch entries for the current file through debugpy.
+- Go launch and test entries through Delve.
 
 Common keymaps:
 
@@ -273,6 +277,8 @@ Common keymaps:
 - `Space dPm` debugs the nearest Python method.
 - `Space dPc` debugs the nearest Python class.
 - `Space dPs` debugs a Python visual selection.
+- `Space dGt` debugs the nearest Go test.
+- `Space dGl` debugs the last Go test again.
 
 For attach debugging, start Node with an inspect flag first, for example:
 
@@ -331,6 +337,9 @@ the whole file.
   and confirm `js-debug-adapter` is installed in `:Mason`.
 - If Python debugging fails after a fresh clone, run `:MasonToolsInstall` and
   confirm `debugpy` is installed in `:Mason`.
+- If Go LSP, formatting, or debugging is missing, install Go first, restart
+  Neovim, run `:MasonToolsInstall`, and confirm `gopls`, `gofumpt`, and `delve`
+  are installed in `:Mason`.
 - If Neotest finds no JS/TS tests, confirm the project has `jest` or `vitest`
   installed and that the Treesitter JavaScript/TypeScript parsers are installed
   with `:TSUpdate`.

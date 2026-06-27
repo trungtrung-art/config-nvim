@@ -13,26 +13,9 @@ local required_executables = {
 }
 
 local optional_executables = {
+	{ label = "Go", commands = { "go" }, reason = "Go LSP, formatter, and debug workflows" },
 	{ label = "tmux", commands = { "tmux" }, reason = "optional terminal multiplexer workflow" },
 	{ label = "WezTerm", commands = { "wezterm" }, reason = "optional inline image preview" },
-}
-
-local mason_packages = {
-	"lua-language-server",
-	"typescript-language-server",
-	"html-lsp",
-	"css-lsp",
-	"tailwindcss-language-server",
-	"json-lsp",
-	"pyright",
-	"eslint-lsp",
-	"stylua",
-	"prettier",
-	"black",
-	"isort",
-	"gofumpt",
-	"js-debug-adapter",
-	"debugpy",
 }
 
 local treesitter_parsers = {
@@ -89,6 +72,35 @@ local function executable_from(candidates)
 	return nil
 end
 
+local function mason_packages()
+	local packages = {
+		"lua-language-server",
+		"typescript-language-server",
+		"html-lsp",
+		"css-lsp",
+		"tailwindcss-language-server",
+		"json-lsp",
+		"pyright",
+		"eslint-lsp",
+		"stylua",
+		"prettier",
+		"black",
+		"isort",
+		"js-debug-adapter",
+		"debugpy",
+	}
+
+	if executable_from({ "go" }) then
+		vim.list_extend(packages, {
+			"gopls",
+			"gofumpt",
+			"delve",
+		})
+	end
+
+	return packages
+end
+
 local function check_executables(title, tools, required)
 	start(title)
 
@@ -111,7 +123,7 @@ end
 local function check_mason_packages()
 	start("Mason packages")
 
-	for _, package in ipairs(mason_packages) do
+	for _, package in ipairs(mason_packages()) do
 		if vim.uv.fs_stat(mason_package_path(package)) then
 			ok(("Mason package installed: %s"):format(package))
 		else
