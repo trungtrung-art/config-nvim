@@ -67,6 +67,12 @@ Lenh Vim tuong duong:
 | `[d` | Diagnostic truoc |
 | `]d` | Diagnostic tiep theo |
 | `Space d` | Mo diagnostic popup |
+| `Space ld` | Mo diagnostics cua workspace bang Trouble |
+| `Space lD` | Mo diagnostics cua buffer hien tai bang Trouble |
+| `Space ls` | Mo document symbols bang Trouble |
+| `Space ll` | Mo definitions/references/implementations bang Trouble |
+| `Space lq` | Mo quickfix list bang Trouble |
+| `Space lL` | Mo location list bang Trouble |
 
 ## Completion
 

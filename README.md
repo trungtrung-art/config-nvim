@@ -174,6 +174,7 @@ Useful commands:
 :MasonToolsInstall
 :TSUpdate
 :ConformInfo
+:Trouble diagnostics
 ```
 
 Recommended first-run checklist:
@@ -198,6 +199,8 @@ and Treesitter parsers are loaded from a clean session.
   available. Then open `:Mason` and confirm the formatter is installed.
 - If clipboard does not work in WSL, install `win32yank.exe` and restart
   Neovim.
+- If diagnostics feel noisy inline, use `Space ld` or `Space lD` to inspect
+  them in Trouble.
 
 ## Notes
 
