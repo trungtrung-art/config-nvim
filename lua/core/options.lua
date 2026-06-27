@@ -1,4 +1,4 @@
-vim.g.mapleader = " "
+local os = require("core.os")
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
@@ -26,25 +26,20 @@ vim.opt.swapfile = false
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
+if os.is_wsl and os.executable("win32yank.exe") then
+	vim.g.clipboard = {
+		name = "win32yank-wsl",
+		copy = {
+			["+"] = "win32yank.exe -i --crlf",
+			["*"] = "win32yank.exe -i --crlf",
+		},
+		paste = {
+			["+"] = "win32yank.exe -o --lf",
+			["*"] = "win32yank.exe -o --lf",
+		},
+		cache_enabled = 0,
+	}
+end
+
 vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "white" })
 vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#ead84e" })
-
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("x", "<leader>p", '"_dP')
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
-local notify_original = vim.notify
-vim.notify = function(msg, ...)
-	if
-		msg
-		and (
-			msg:match("position_encoding param is required")
-			or msg:match("Defaulting to position encoding of the first client")
-			or msg:match("multiple different client offset_encodings")
-		)
-	then
-		return
-	end
-	return notify_original(msg, ...)
-end
