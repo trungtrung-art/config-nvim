@@ -42,6 +42,7 @@ return {
 				"isort",
 				"gofumpt",
 				"js-debug-adapter",
+				"debugpy",
 			},
 			auto_update = false,
 			run_on_start = true,

@@ -260,6 +260,9 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `Space dr` | Mo debug REPL |
 | `Space du` | Bat/tat debug UI |
 | `Space de` | Eval expression duoi cursor hoac visual selection |
+| `Space dPm` | Debug Python method gan cursor |
+| `Space dPc` | Debug Python class gan cursor |
+| `Space dPs` | Debug Python visual selection |
 
 Lua chon debug hien co:
 
@@ -268,6 +271,7 @@ Lua chon debug hien co:
 | `Launch current file` | Chay file JS/TS hien tai bang Node debugger |
 | `Attach to Node process` | Attach vao process Node dang chay voi inspect |
 | `Launch Chrome against localhost` | Mo Chrome debug cho frontend localhost |
+| Python launch entries | Chay file Python hien tai bang debugpy |
 
 ## Test JavaScript/TypeScript
 

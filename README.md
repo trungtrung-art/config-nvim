@@ -27,9 +27,10 @@ Optional but recommended:
 - tmux
 - WezTerm
 
-Mason installs the configured language servers and formatters on first run where
-possible, including Lua, TypeScript, HTML, CSS, Tailwind, JSON, Python, ESLint,
-Stylua, Prettier, Black, isort, gofumpt, and the JavaScript debug adapter.
+Mason installs the configured language servers, formatters, and debug adapters
+on first run where possible, including Lua, TypeScript, HTML, CSS, Tailwind,
+JSON, Python, ESLint, Stylua, Prettier, Black, isort, gofumpt, the JavaScript
+debug adapter, and debugpy.
 
 ## Install
 
@@ -253,14 +254,15 @@ It checks:
 
 ## Debugging
 
-JavaScript and TypeScript debugging is configured through `nvim-dap`,
-`nvim-dap-ui`, and Mason's `js-debug-adapter`.
+JavaScript, TypeScript, and Python debugging is configured through `nvim-dap`,
+`nvim-dap-ui`, Mason's `js-debug-adapter`, and Mason's `debugpy`.
 
 Supported debug entries:
 
 - `Launch current file` for Node-based JS/TS files.
 - `Attach to Node process` for processes started with Node inspect flags.
 - `Launch Chrome against localhost` for frontend apps such as Vite or Next.js.
+- Python launch entries for the current file through debugpy.
 
 Common keymaps:
 
@@ -268,6 +270,9 @@ Common keymaps:
 - `Space dc` starts or continues a debug session.
 - `Space du` toggles the debug UI.
 - `Space dt` terminates the current session.
+- `Space dPm` debugs the nearest Python method.
+- `Space dPc` debugs the nearest Python class.
+- `Space dPs` debugs a Python visual selection.
 
 For attach debugging, start Node with an inspect flag first, for example:
 
@@ -324,6 +329,8 @@ the whole file.
   a compact Git log inside Neovim.
 - If JavaScript debugging fails after a fresh clone, run `:MasonToolsInstall`
   and confirm `js-debug-adapter` is installed in `:Mason`.
+- If Python debugging fails after a fresh clone, run `:MasonToolsInstall` and
+  confirm `debugpy` is installed in `:Mason`.
 - If Neotest finds no JS/TS tests, confirm the project has `jest` or `vitest`
   installed and that the Treesitter JavaScript/TypeScript parsers are installed
   with `:TSUpdate`.

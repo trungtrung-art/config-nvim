@@ -32,6 +32,7 @@ local mason_packages = {
 	"isort",
 	"gofumpt",
 	"js-debug-adapter",
+	"debugpy",
 }
 
 local treesitter_parsers = {

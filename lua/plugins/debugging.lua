@@ -199,4 +199,52 @@ return {
 			end
 		end,
 	},
+	{
+		"mfussenegger/nvim-dap-python",
+		ft = "python",
+		dependencies = { "mfussenegger/nvim-dap" },
+		keys = {
+			{
+				"<leader>dPm",
+				function()
+					require("dap-python").test_method()
+				end,
+				desc = "Debug Python method",
+			},
+			{
+				"<leader>dPc",
+				function()
+					require("dap-python").test_class()
+				end,
+				desc = "Debug Python class",
+			},
+			{
+				"<leader>dPs",
+				function()
+					require("dap-python").debug_selection()
+				end,
+				mode = "v",
+				desc = "Debug Python selection",
+			},
+		},
+		config = function()
+			require("dap-python").setup(mason_bin("debugpy-adapter"))
+
+			table.insert(require("dap").configurations.python, {
+				type = "python",
+				request = "launch",
+				name = "Launch current file with arguments",
+				program = "${file}",
+				console = "integratedTerminal",
+				args = function()
+					local input = vim.fn.input("Arguments: ")
+					if input == "" then
+						return {}
+					end
+
+					return vim.split(input, " ", { trimempty = true })
+				end,
+			})
+		end,
+	},
 }
