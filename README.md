@@ -1,390 +1,344 @@
-# Neovim Config
+# config-nvim
 
-Personal Neovim configuration focused on frontend development, Git workflows,
-LSP, formatting, Treesitter, Telescope, navigation, tests, debugging, Markdown
-docs, session restore, terminal usage, optional Claude/Codex CLI workflow, and
-cross-platform use.
+Day la bo Neovim config cua `trungtrung-art`.
 
-## Status
+No bat dau tu mot chuyen rat don gian: minh to mo ve Neovim. Ban dau chi la
+muon thu xem mot editor trong terminal co gi hay, sau do thanh viec tu dung mot
+bo config rieng de hoc, de toc mach, de code hang ngay, va de chia se cho ai
+muon clone ve dung thu.
 
-This config currently works on Windows native Neovim and is being hardened for
-Windows/WSL, macOS, and Linux portability. tmux support is included but optional.
+Config nay khong co y dinh lam mot framework lon. No la mot bo setup ca nhan,
+co du nhung thu minh can: mo project, tim file, LSP, format, Git, terminal,
+test, debug, Markdown, session, va mot loi mo nhanh cho Claude/Codex CLI.
 
-## Requirements
+## Dung Cho Ai
 
-Install these tools before starting Neovim on a fresh machine:
+- Ban moi to mo ve Neovim va muon xem mot config that te duoc sap xep ra sao.
+- Ban lam frontend/JavaScript/TypeScript va can LSP, format, test, debug.
+- Ban dung Git nhieu va muon co status, blame, diff, log ngay trong Neovim.
+- Ban muon mot config co the clone sang may moi roi kiem tra thieu gi bang mot lenh.
+- Ban muon dung Claude hoac Codex CLI ngay trong terminal cua project.
 
-- Neovim 0.11 or newer
-- Git
-- Node.js and npm
-- Python 3
-- ripgrep
-- fd
-- C compiler toolchain for Treesitter parsers
-- unzip
+## Cai Dat Nhanh
 
-Optional but recommended:
-
-- Go, if you work on Go projects
-- tmux
-- WezTerm
-- Claude Code CLI, if you want Claude inside project terminals
-- Codex CLI, if you want Codex inside project terminals
-
-Mason installs the configured language servers, formatters, and debug adapters
-on first run where possible, including Lua, TypeScript, HTML, CSS, Tailwind,
-JSON, Markdown, Python, ESLint, Stylua, Prettier, Black, isort, the JavaScript
-debug adapter, Marksman, and debugpy. If `go` is available in `PATH`, Mason also installs
-`gopls`, `gofumpt`, and Delve.
-
-## Install
-
-### Windows native
-
-Install dependencies with `winget`:
+### Windows
 
 ```powershell
-winget install Neovim.Neovim Git.Git OpenJS.NodeJS Python.Python.3.12 BurntSushi.ripgrep.MSVC sharkdp.fd wez.wezterm
-```
-
-Install a C compiler for Treesitter parsers. LLVM is a reasonable default:
-
-```powershell
-winget install LLVM.LLVM
-```
-
-Clone this repository into the standard Windows Neovim config directory:
-
-```powershell
+winget install Neovim.Neovim Git.Git OpenJS.NodeJS Python.Python.3.12 BurntSushi.ripgrep.MSVC sharkdp.fd wez.wezterm LLVM.LLVM
 git clone https://github.com/trungtrung-art/config-nvim.git $env:LOCALAPPDATA\nvim
+nvim
 ```
 
-### WSL or Ubuntu Linux
-
-Install dependencies:
+### WSL / Linux
 
 ```bash
 sudo apt update
 sudo apt install -y git curl unzip build-essential ripgrep fd-find nodejs npm python3 python3-pip tmux
+git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
+nvim
 ```
 
-Ubuntu names `fd` as `fdfind`. Create a local shim if `fd` is missing:
+Neu Ubuntu khong co lenh `fd`, tao shim:
 
 ```bash
 mkdir -p ~/.local/bin
 ln -s "$(command -v fdfind)" ~/.local/bin/fd
 ```
 
-Make sure `~/.local/bin` is in `PATH`:
-
-```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-```
-
-Install Neovim 0.11 or newer from the official release, a PPA, or another
-package source. Then clone this repository:
-
-```bash
-git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
-```
-
-Optional WSL clipboard support:
-
-```bash
-curl -L -o /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip
-unzip /tmp/win32yank.zip -d ~/.local/bin
-chmod +x ~/.local/bin/win32yank.exe
-```
-
 ### macOS
-
-Install dependencies with Homebrew:
 
 ```bash
 brew install neovim git node python ripgrep fd tmux unzip
-```
-
-Install Apple command line tools if Treesitter parsers fail to build:
-
-```bash
-xcode-select --install
-```
-
-Clone this repository into the standard XDG Neovim config directory:
-
-```bash
 git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
-```
-
-### Existing config backup
-
-If the target config directory already exists, back it up before cloning:
-
-```bash
-mv ~/.config/nvim ~/.config/nvim.backup
-```
-
-On Windows:
-
-```powershell
-$nvimConfig = Join-Path $env:LOCALAPPDATA "nvim"
-Rename-Item $nvimConfig "$nvimConfig.backup"
-```
-
-## tmux
-
-This repository includes a tmux config at `tmux/.tmux.conf`.
-
-On macOS, Linux, or WSL:
-
-```bash
-ln -s ~/.config/nvim/tmux/.tmux.conf ~/.tmux.conf
-```
-
-The tmux config uses `Ctrl-a` as the prefix and supports `Ctrl-h/j/k/l`
-navigation between tmux panes and Neovim splits.
-
-## Cross-platform behavior
-
-The config includes lightweight OS detection in `lua/core/os.lua`.
-
-- Windows native prefers PowerShell Core (`pwsh`) when available, then Windows
-  PowerShell.
-- WSL uses `win32yank.exe` for clipboard integration when it is installed.
-- Image opening uses OS-specific open commands when available:
-  - Windows: `cmd.exe /c start`
-  - WSL: `wslview` or `explorer.exe`
-  - macOS: `open`
-  - Linux: `xdg-open`
-- Inline image preview uses WezTerm `imgcat` when the `wezterm` CLI is
-  available, otherwise it opens the image with the operating system.
-
-## Terminal And AI Assistants
-
-Integrated terminals use `toggleterm.nvim` and open in the current Neovim `cwd`.
-Use `Space gc` first if you want to move Neovim's `cwd` to the current Git root.
-
-Common keymaps:
-
-- `Space tt` opens a horizontal terminal.
-- `Space tf` opens a floating terminal.
-- `Space tv` opens a vertical terminal.
-- `Space ac` opens Claude in the current Git root, falling back to `cwd`.
-- `Space aC` continues the last Claude conversation in the project root.
-- `Space ax` opens Codex in the current Git root, falling back to `cwd`.
-- `Space aX` resumes Codex in the project root.
-
-Claude and Codex are optional CLI workflows. Install and authenticate those tools
-outside Neovim; this config only opens them in the right project directory.
-
-## Sessions
-
-Project sessions are managed by `persistence.nvim`.
-
-- Sessions are saved automatically when Neovim exits after a real file has been
-  opened.
-- Sessions are not restored automatically, so opening a single file stays
-  predictable.
-- Session files live under Neovim's state directory, not in this repository.
-
-Common keymaps:
-
-- `Space ss` restores the session for the current working directory.
-- `Space sS` opens a session picker.
-- `Space sl` restores the last session.
-- `Space sd` stops saving the current session.
-
-Recommended project workflow:
-
-```bash
-cd path/to/project
-nvim .
-```
-
-Then press `Space ss` if you want to restore the saved project layout.
-
-## First Run
-
-Open Neovim and let lazy.nvim install plugins:
-
-```bash
 nvim
 ```
 
-Then check health:
+## Lan Dau Mo Neovim
 
-```vim
-:checkhealth
-```
-
-Useful commands:
-
-```vim
-:Lazy
-:Mason
-:MasonToolsInstall
-:TSUpdate
-:ConformInfo
-:Trouble diagnostics
-:Git
-:Git blame
-:DapContinue
-:DapToggleBreakpoint
-:NvimConfigCheck
-```
-
-Recommended first-run checklist:
+Sau khi mo `nvim`, chay cac lenh nay:
 
 ```vim
 :Lazy sync
 :MasonToolsInstall
 :TSUpdate
-:ConformInfo
-:NvimConfigCheck
-:checkhealth
-```
-
-Restart Neovim after the first install pass so all language servers, formatters,
-and Treesitter parsers are loaded from a clean session.
-
-## Bootstrap Check
-
-This config adds a focused health provider for new machines.
-
-Run:
-
-```vim
 :NvimConfigCheck
 ```
 
-This command runs the config health provider directly.
+Neu co loi, doc output cua `:NvimConfigCheck` truoc. Lenh nay se bao may dang
+thieu Git, Node, Python, ripgrep, fd, Mason package, Treesitter parser, Claude,
+Codex, hoac tool he dieu hanh nao.
 
-It checks:
+## Thu Muc Chinh
 
-- Neovim version.
-- Required executables such as Git, Node.js, npm, Python, ripgrep, fd, and
-  unzip.
-- Optional executables such as Go, tmux, WezTerm, Claude Code, and Codex CLI.
-- OS-specific helpers for Windows, WSL, macOS, and Linux.
-- Mason packages used by LSP, formatting, Markdown, debugging, and JS/TS tooling.
-- Treesitter parsers used by this config.
-- Current project context, including Git root and Jest/Vitest signals when
-  `package.json` exists.
+| Duong dan               | Tac dung                                    |
+| ----------------------- | ------------------------------------------- |
+| `init.lua`              | Diem vao cua config, nap core va plugins    |
+| `lua/core/options.lua`  | Option editor, shell, clipboard             |
+| `lua/core/keymaps.lua`  | Keymap core nho                             |
+| `lua/core/os.lua`       | Helper nhan dien Windows, WSL, macOS, Linux |
+| `lua/core/open.lua`     | Mo file/anh bang OS hoac WezTerm            |
+| `lua/core/health.lua`   | Lenh `:NvimConfigCheck`                     |
+| `lua/health/config.lua` | Health check rieng cua config nay           |
+| `lua/plugins/*.lua`     | Tat ca plugin va workflow chinh             |
+| `KEYMAPS.md`            | Bang phim tat chi tiet hon                  |
+| `NEXT_BATCHES.md`       | Trang thai batch va viec con lai            |
+| `tmux/.tmux.conf`       | tmux config optional                        |
 
+## Plugin Va Workflow
 
-## Markdown And Docs
+| Nhom           | Plugin / Tool                                                     | Tac dung                                                   |
+| -------------- | ----------------------------------------------------------------- | ---------------------------------------------------------- |
+| Plugin manager | `lazy.nvim`                                                       | Cai va quan ly plugin                                      |
+| Theme          | `catppuccin`                                                      | Giao dien mau                                              |
+| File tree      | `neo-tree.nvim`                                                   | Mo/cay thu muc ben trai                                    |
+| Search         | `telescope.nvim`, `ripgrep`, `fd`                                 | Tim file, grep text, tim buffer                            |
+| UI             | `lualine.nvim`, `bufferline.nvim`, `which-key.nvim`               | Statusline, buffer tabs, goi y phim                        |
+| Completion     | `nvim-cmp`, `LuaSnip`                                             | Autocomplete va snippets                                   |
+| LSP            | `mason.nvim`, `mason-lspconfig.nvim`, `nvim-lspconfig`            | Cai va chay language servers                               |
+| Format         | `conform.nvim`                                                    | Format buffer bang Prettier, Stylua, Black, isort, gofumpt |
+| Treesitter     | `nvim-treesitter`, `nvim-treesitter-textobjects`                  | Highlight va textobjects tot hon                           |
+| Diagnostics    | `trouble.nvim`                                                    | Xem diagnostics/list loi ro rang                           |
+| Git            | `vim-fugitive`, `gitsigns.nvim`, `diffview.nvim`, `gitgraph.nvim` | Git status, blame, hunk, diff, graph                       |
+| Terminal       | `toggleterm.nvim`                                                 | Terminal ngang/doc/floating trong Neovim                   |
+| Session        | `persistence.nvim`                                                | Luu/restore workspace theo project                         |
+| Test           | `neotest`, `neotest-jest`, `neotest-vitest`                       | Chay Jest/Vitest                                           |
+| Debug          | `nvim-dap`, `dap-ui`, `dap-python`, `dap-go`, `dap-vscode-js`     | Debug JS/TS, Python, Go                                    |
+| Markdown       | `marksman`, Treesitter, Prettier                                  | Viet README/docs de hon                                    |
+| AI CLI         | `claude`, `codex`                                                 | Mo Claude/Codex trong Git root cua project                 |
+| Images         | `wezterm imgcat`                                                  | Preview anh trong terminal neu co WezTerm                  |
+| tmux           | `vim-tmux-navigator`                                              | Di chuyen giua tmux pane va Neovim split                   |
 
-Markdown files use Treesitter highlighting for `markdown` and `markdown_inline`,
-Marksman LSP for document intelligence, and Prettier formatting through
-`conform.nvim`.
+## Language Servers Va Formatters
 
-Useful workflow:
+| Ngon ngu / file         | LSP                            | Formatter / Tool          |
+| ----------------------- | ------------------------------ | ------------------------- |
+| Lua                     | `lua_ls`                       | `stylua`                  |
+| JavaScript / TypeScript | `ts_ls`                        | `prettier`                |
+| React / TSX             | `ts_ls`                        | `prettier`                |
+| HTML                    | `html`                         | `prettier`                |
+| CSS / Tailwind          | `cssls`, `tailwindcss`         | `prettier`                |
+| JSON                    | `jsonls`                       | `prettier`                |
+| Markdown                | `marksman`                     | `prettier`                |
+| Python                  | `pyright`                      | `isort`, `black`          |
+| Go                      | `gopls` neu co `go` trong PATH | `gofumpt`                 |
+| ESLint                  | `eslint`                       | code action / diagnostics |
 
-```bash
-nvim README.md
-```
+## Bang Cu Phap / Phim Tat
 
-Then use normal LSP keymaps such as `K`, `gd`, `Space ca`, and `Space p`.
+`leader` la phim `Space`.
 
-## Debugging
+### Mo File Va Tim Kiem
 
-JavaScript, TypeScript, Python, and Go debugging is configured through
-`nvim-dap`, `nvim-dap-ui`, Mason's `js-debug-adapter`, Mason's `debugpy`, and
-Delve.
+| Phim       | Tac dung                            |
+| ---------- | ----------------------------------- |
+| `Space v`  | Bat/tat Neo-tree ben trai           |
+| `Space q`  | Reveal file hien tai trong Neo-tree |
+| `Space ff` | Tim file                            |
+| `Space fg` | Tim text trong project              |
+| `Space fb` | Tim buffer dang mo                  |
+| `Space fh` | Tim help tag                        |
 
-Supported debug entries:
+### Buffer
 
-- `Launch current file` for Node-based JS/TS files.
-- `Attach to Node process` for processes started with Node inspect flags.
-- `Launch Chrome against localhost` for frontend apps such as Vite or Next.js.
-- Python launch entries for the current file through debugpy.
-- Go launch and test entries through Delve.
+| Phim        | Tac dung                   |
+| ----------- | -------------------------- |
+| `Tab`       | Buffer tiep theo           |
+| `Shift Tab` | Buffer truoc               |
+| `Space bp`  | Pick buffer                |
+| `Space x`   | Dong buffer hien tai       |
+| `Space X`   | Force dong buffer hien tai |
+| `Space bo`  | Dong cac buffer khac       |
 
-Common keymaps:
+### Session Va Project
 
-- `Space db` toggles a breakpoint.
-- `Space dc` starts or continues a debug session.
-- `Space du` toggles the debug UI.
-- `Space dt` terminates the current session.
-- `Space dPm` debugs the nearest Python method.
-- `Space dPc` debugs the nearest Python class.
-- `Space dPs` debugs a Python visual selection.
-- `Space dGt` debugs the nearest Go test.
-- `Space dGl` debugs the last Go test again.
+| Phim       | Tac dung                          |
+| ---------- | --------------------------------- |
+| `Space ss` | Restore session cua cwd hien tai  |
+| `Space sS` | Chon session de restore           |
+| `Space sl` | Restore session gan nhat          |
+| `Space sd` | Dung luu session cho lan hien tai |
 
-For attach debugging, start Node with an inspect flag first, for example:
+### LSP Va Diagnostics
 
-```bash
-node --inspect-brk app.js
-```
+| Phim       | Tac dung                                       |
+| ---------- | ---------------------------------------------- |
+| `K`        | Hover/documentation                            |
+| `gd`       | Di toi definition                              |
+| `gD`       | Di toi declaration                             |
+| `gi`       | Di toi implementation                          |
+| `gr`       | Tim references                                 |
+| `Space rn` | Rename symbol                                  |
+| `Space ca` | Code action                                    |
+| `Space lf` | Format buffer bang LSP/fallback                |
+| `Space p`  | Format buffer                                  |
+| `[d`       | Diagnostic truoc                               |
+| `]d`       | Diagnostic tiep theo                           |
+| `Space d`  | Diagnostic popup                               |
+| `Space ld` | Trouble workspace diagnostics                  |
+| `Space lD` | Trouble buffer diagnostics                     |
+| `Space ls` | Trouble document symbols                       |
+| `Space ll` | Trouble definitions/references/implementations |
+| `Space lq` | Trouble quickfix                               |
+| `Space lL` | Trouble location list                          |
 
-## Testing
+### Completion
 
-JavaScript and TypeScript test running is configured through Neotest with Jest
-and Vitest adapters.
+| Phim         | Tac dung                              |
+| ------------ | ------------------------------------- |
+| `Ctrl Space` | Goi autocomplete                      |
+| `Ctrl j`     | Chon item tiep theo                   |
+| `Ctrl k`     | Chon item truoc                       |
+| `Tab`        | Chon item tiep theo hoac nhay snippet |
+| `Shift Tab`  | Chon item truoc hoac lui snippet      |
+| `Enter`      | Xac nhan completion                   |
+| `Ctrl e`     | Huy completion                        |
+| `Ctrl b`     | Cuon docs len                         |
+| `Ctrl f`     | Cuon docs xuong                       |
 
-Supported project runners:
+### Git
 
-- Jest projects with `jest` installed or exposed through the project test
-  script.
-- Vitest projects with `vitest` installed.
+| Phim       | Tac dung                                  |
+| ---------- | ----------------------------------------- |
+| `Space gg` | Mo Git Graph                              |
+| `Space gc` | Chuyen cwd vao Git root cua file hien tai |
+| `Space gw` | Xem cwd hien tai                          |
+| `Space gs` | Fugitive Git status                       |
+| `Space gb` | Fugitive Git blame                        |
+| `Space gC` | Fugitive Git commit                       |
+| `Space gl` | Git log ngan gon                          |
+| `Space gd` | Diffview thay doi hien tai                |
+| `Space gh` | History cua file hien tai                 |
+| `Space gH` | History cua repo                          |
+| `Space gq` | Dong Diffview                             |
+| `]h`       | Hunk tiep theo                            |
+| `[h`       | Hunk truoc                                |
+| `Space hs` | Stage hunk                                |
+| `Space hr` | Reset hunk                                |
+| `Space hp` | Preview hunk                              |
+| `Space hb` | Blame line                                |
 
-Common keymaps:
+### Terminal, Claude, Codex
 
-- `Space nn` runs the nearest test.
-- `Space nf` runs the current test file.
-- `Space nA` runs all tests in the current working directory.
-- `Space nl` runs the last test again.
-- `Space nd` debugs the nearest test through DAP when the adapter supports it.
-- `Space ns` toggles the test summary.
-- `Space no` opens focused output for a test.
-- `Space nO` toggles the output panel.
+| Phim         | Tac dung                                |
+| ------------ | --------------------------------------- |
+| `Space tt`   | Terminal ngang                          |
+| `Space tf`   | Terminal floating                       |
+| `Space tv`   | Terminal doc ben phai                   |
+| `2 Space tt` | Terminal so 2 dang ngang                |
+| `3 Space tf` | Terminal so 3 dang floating             |
+| `4 Space tv` | Terminal so 4 dang doc                  |
+| `Ctrl \`     | Toggle terminal mac dinh cua ToggleTerm |
+| `Esc Esc`    | Thoat terminal mode ve normal mode      |
+| `Space ac`   | Mo Claude CLI trong Git root            |
+| `Space aC`   | Tiep tuc Claude CLI trong Git root      |
+| `Space ax`   | Mo Codex CLI trong Git root             |
+| `Space aX`   | Resume Codex CLI trong Git root         |
 
-Recommended workflow:
+### Comment, Edit, Navigation
+
+| Phim               | Tac dung                                      |
+| ------------------ | --------------------------------------------- |
+| `gcc`              | Comment/uncomment dong hien tai               |
+| `gc` visual        | Comment/uncomment vung chon                   |
+| `ys{motion}{char}` | Them surround                                 |
+| `S{char}` visual   | Them surround cho vung chon                   |
+| `ds{char}`         | Xoa surround                                  |
+| `cs{old}{new}`     | Doi surround                                  |
+| `J` visual         | Di chuyen dong xuong                          |
+| `K` visual         | Di chuyen dong len                            |
+| `Space p` visual   | Paste de len vung chon ma khong mat clipboard |
+| `s`                | Flash jump                                    |
+| `Space S`          | Flash Treesitter node                         |
+| `af` / `if`        | Around/inside function                        |
+| `ac` / `ic`        | Around/inside class                           |
+| `]m` / `[m`        | Function tiep theo/truoc do                   |
+| `]]` / `[[`        | Class tiep theo/truoc do                      |
+
+### Images
+
+| Phim       | Tac dung                                    |
+| ---------- | ------------------------------------------- |
+| `Space ip` | Preview image bang `wezterm imgcat`         |
+| `Space io` | Mo image bang app mac dinh cua he dieu hanh |
+
+### Debug
+
+| Phim        | Tac dung                       |
+| ----------- | ------------------------------ |
+| `Space db`  | Toggle breakpoint              |
+| `Space dB`  | Conditional breakpoint         |
+| `Space dL`  | Log point                      |
+| `Space dc`  | Start/continue debug           |
+| `Space do`  | Step over                      |
+| `Space di`  | Step into                      |
+| `Space dO`  | Step out                       |
+| `Space dp`  | Pause debug                    |
+| `Space dt`  | Terminate debug                |
+| `Space dl`  | Chay lai debug config gan nhat |
+| `Space dr`  | Mo debug REPL                  |
+| `Space du`  | Toggle debug UI                |
+| `Space de`  | Eval expression                |
+| `Space dPm` | Debug Python method gan cursor |
+| `Space dPc` | Debug Python class gan cursor  |
+| `Space dPs` | Debug Python visual selection  |
+| `Space dGt` | Debug Go test gan cursor       |
+| `Space dGl` | Debug lai Go test gan nhat     |
+
+### Test JavaScript / TypeScript
+
+| Phim       | Tac dung                        |
+| ---------- | ------------------------------- |
+| `Space nn` | Chay test gan cursor            |
+| `Space nf` | Chay test file hien tai         |
+| `Space nA` | Chay tat ca test trong cwd      |
+| `Space nl` | Chay lai test gan nhat          |
+| `Space nd` | Debug test gan cursor bang DAP  |
+| `Space ns` | Toggle test summary             |
+| `Space no` | Mo output test gan nhat         |
+| `Space nO` | Toggle output panel             |
+| `Space nx` | Dung test gan nhat              |
+| `Space nw` | Toggle watch test file hien tai |
+
+### Lenh Hay Dung
+
+| Lenh                   | Tac dung                          |
+| ---------------------- | --------------------------------- |
+| `:Lazy`                | Quan ly plugin                    |
+| `:Mason`               | Quan ly LSP/formatter/debugger    |
+| `:MasonToolsInstall`   | Cai tool Mason thieu              |
+| `:TSUpdate`            | Cap nhat Treesitter parsers       |
+| `:ConformInfo`         | Xem formatter cua buffer          |
+| `:Trouble diagnostics` | Mo diagnostics bang Trouble       |
+| `:Git`                 | Fugitive Git status               |
+| `:Git blame`           | Git blame                         |
+| `:DapContinue`         | Start/continue debug              |
+| `:DapToggleBreakpoint` | Toggle breakpoint                 |
+| `:NvimConfigCheck`     | Kiem tra config tren may hien tai |
+
+## Workflow Ngan
 
 ```bash
 cd path/to/project
 nvim .
 ```
 
-Open a test file, then press `Space nn` for the nearest test or `Space nf` for
-the whole file.
+Trong Neovim:
 
-## Troubleshooting
+1. `Space v` de mo cay file.
+2. `Space ff` de tim file.
+3. `Space fg` de grep text.
+4. `gd`, `K`, `Space ca`, `Space rn` de lam viec voi LSP.
+5. `Space p` de format.
+6. `Space gs` de xem Git status.
+7. `Space tt` de mo terminal.
+8. `Space nn` hoac `Space nf` de chay test.
+9. `Space db`, `Space dc`, `Space du` de debug.
+10. `Space ac` hoac `Space ax` neu muon goi Claude/Codex trong project.
 
-- If Telescope live grep fails, install `ripgrep`.
-- If Telescope find files is slow or missing results, install `fd`.
-- If Treesitter parser installation fails, install a C compiler toolchain.
-- If formatting does nothing, open `:ConformInfo` and confirm the formatter is
-  available. Then open `:Mason` and confirm the formatter is installed.
-- If clipboard does not work in WSL, install `win32yank.exe` and restart
-  Neovim.
-- If diagnostics feel noisy inline, use `Space ld` or `Space lD` to inspect
-  them in Trouble.
-- Use `s` for Flash jump, `ys`/`ds`/`cs` for surround edits, and `af`/`if` or
-  `ac`/`ic` for Treesitter textobjects.
-- Use `Space gs` for Git status, `Space gb` for file blame, and `Space gl` for
-  a compact Git log inside Neovim.
-- If JavaScript debugging fails after a fresh clone, run `:MasonToolsInstall`
-  and confirm `js-debug-adapter` is installed in `:Mason`.
-- If Python debugging fails after a fresh clone, run `:MasonToolsInstall` and
-  confirm `debugpy` is installed in `:Mason`.
-- If Go LSP, formatting, or debugging is missing, install Go first, restart
-  Neovim, run `:MasonToolsInstall`, and confirm `gopls`, `gofumpt`, and `delve`
-  are installed in `:Mason`.
-- If Neotest finds no JS/TS tests, confirm the project has `jest` or `vitest`
-  installed and that the Treesitter JavaScript/TypeScript parsers are installed
-  with `:TSUpdate`.
-- If something feels broken after cloning to a new machine, run
-  `:NvimConfigCheck` first and fix the reported missing executable, Mason tool,
-  or Treesitter parser.
-- If a restored session opens an old layout, start Neovim in the project root
-  with `nvim .`, then use `Space ss` for that cwd or `Space sS` to pick another
-  session.
+## Ghi Chu
 
-## Notes
-
-- `lazy-lock.json` is committed to keep plugin versions stable across machines.
-- Local machine-specific settings should go in `lua/local.lua`, not in the
-  shared config. Copy `lua/local.lua.example` to `lua/local.lua` when needed.
-- `.editorconfig` and `.stylua.toml` keep formatting stable across machines.
+- `lazy-lock.json` duoc commit de giu version plugin on dinh.
+- Cau hinh rieng tung may nen de trong `lua/local.lua`, khong commit len repo.
+- `tmux` la optional, Windows native van dung tot voi ToggleTerm.
+- Go tools chi duoc cai khi may co `go` trong PATH.
+- Claude va Codex la optional CLI; config nay chi mo terminal dung thu muc, khong luu token hay API key.
