@@ -1,25 +1,22 @@
 # config-nvim
 
-Day la bo Neovim config cua `trungtrung-art`.
+[Tiếng Việt](README.vi.md)
 
-No bat dau tu mot chuyen rat don gian: minh to mo ve Neovim. Ban dau chi la
-muon thu xem mot editor trong terminal co gi hay, sau do thanh viec tu dung mot
-bo config rieng de hoc, de toc mach, de code hang ngay, va de chia se cho ai
-muon clone ve dung thu.
+This is the Neovim config of `trungtrung-art`.
 
-Config nay khong co y dinh lam mot framework lon. No la mot bo setup ca nhan,
-co du nhung thu minh can: mo project, tim file, LSP, format, Git, terminal,
-test, debug, Markdown, session, va mot loi mo nhanh cho Claude/Codex CLI.
+It started from a simple curiosity: I wanted to understand Neovim. At first, it was just about seeing what a terminal editor could do. Then it became a personal config for learning, tinkering, daily coding, and sharing with anyone who wants to clone it and try it.
 
-## Dung Cho Ai
+This config is not trying to be a big framework. It is a personal setup with the things I actually use: project navigation, file search, LSP, formatting, Git, terminal, tests, debugging, Markdown, sessions, and quick project terminals for Claude/Codex CLI.
 
-- Ban moi to mo ve Neovim va muon xem mot config that te duoc sap xep ra sao.
-- Ban lam frontend/JavaScript/TypeScript va can LSP, format, test, debug.
-- Ban dung Git nhieu va muon co status, blame, diff, log ngay trong Neovim.
-- Ban muon mot config co the clone sang may moi roi kiem tra thieu gi bang mot lenh.
-- Ban muon dung Claude hoac Codex CLI ngay trong terminal cua project.
+## Who This Is For
 
-## Cai Dat Nhanh
+- You are curious about Neovim and want to see how a practical config is built.
+- You write frontend, JavaScript, or TypeScript and want LSP, formatting, tests, and debugging.
+- You use Git often and want status, blame, diff, and logs inside Neovim.
+- You want a config that can be cloned onto a new machine and checked with one command.
+- You want Claude or Codex CLI available inside the current project terminal.
+
+## Quick Install
 
 ### Windows
 
@@ -38,7 +35,7 @@ git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
 nvim
 ```
 
-Neu Ubuntu khong co lenh `fd`, tao shim:
+If Ubuntu does not provide an `fd` command, create a small shim:
 
 ```bash
 mkdir -p ~/.local/bin
@@ -53,9 +50,9 @@ git clone https://github.com/trungtrung-art/config-nvim.git ~/.config/nvim
 nvim
 ```
 
-## Lan Dau Mo Neovim
+## First Run
 
-Sau khi mo `nvim`, chay cac lenh nay:
+After opening `nvim`, run:
 
 ```vim
 :Lazy sync
@@ -64,115 +61,113 @@ Sau khi mo `nvim`, chay cac lenh nay:
 :NvimConfigCheck
 ```
 
-Neu co loi, doc output cua `:NvimConfigCheck` truoc. Lenh nay se bao may dang
-thieu Git, Node, Python, ripgrep, fd, Mason package, Treesitter parser, Claude,
-Codex, hoac tool he dieu hanh nao.
+If something fails, read `:NvimConfigCheck` first. It reports missing tools such as Git, Node, Python, ripgrep, fd, Mason packages, Treesitter parsers, Claude, Codex, or operating-system helpers.
 
-## Thu Muc Chinh
+## Main Files
 
-| Duong dan               | Tac dung                                    |
-| ----------------------- | ------------------------------------------- |
-| `init.lua`              | Diem vao cua config, nap core va plugins    |
-| `lua/core/options.lua`  | Option editor, shell, clipboard             |
-| `lua/core/keymaps.lua`  | Keymap core nho                             |
-| `lua/core/os.lua`       | Helper nhan dien Windows, WSL, macOS, Linux |
-| `lua/core/open.lua`     | Mo file/anh bang OS hoac WezTerm            |
-| `lua/core/health.lua`   | Lenh `:NvimConfigCheck`                     |
-| `lua/health/config.lua` | Health check rieng cua config nay           |
-| `lua/plugins/*.lua`     | Tat ca plugin va workflow chinh             |
-| `KEYMAPS.md`            | Bang phim tat chi tiet hon                  |
-| `NEXT_BATCHES.md`       | Trang thai batch va viec con lai            |
-| `tmux/.tmux.conf`       | tmux config optional                        |
+| Path                    | Purpose                                      |
+| ----------------------- | -------------------------------------------- |
+| `init.lua`              | Config entry point, loads core and plugins   |
+| `lua/core/options.lua`  | Editor options, shell, clipboard             |
+| `lua/core/keymaps.lua`  | Small core keymaps                           |
+| `lua/core/os.lua`       | Windows, WSL, macOS, Linux detection helpers |
+| `lua/core/open.lua`     | Open files/images through the OS or WezTerm  |
+| `lua/core/health.lua`   | Defines `:NvimConfigCheck`                   |
+| `lua/health/config.lua` | Custom health checks for this config         |
+| `lua/plugins/*.lua`     | All plugin and workflow definitions          |
+| `KEYMAPS.md`            | More detailed keymap reference               |
+| `NEXT_BATCHES.md`       | Batch status and remaining notes             |
+| `tmux/.tmux.conf`       | Optional tmux config                         |
 
-## Plugin Va Workflow
+## Plugins And Workflows
 
-| Nhom           | Plugin / Tool                                                     | Tac dung                                                   |
-| -------------- | ----------------------------------------------------------------- | ---------------------------------------------------------- |
-| Plugin manager | `lazy.nvim`                                                       | Cai va quan ly plugin                                      |
-| Theme          | `catppuccin`                                                      | Giao dien mau                                              |
-| File tree      | `neo-tree.nvim`                                                   | Mo/cay thu muc ben trai                                    |
-| Search         | `telescope.nvim`, `ripgrep`, `fd`                                 | Tim file, grep text, tim buffer                            |
-| UI             | `lualine.nvim`, `bufferline.nvim`, `which-key.nvim`               | Statusline, buffer tabs, goi y phim                        |
-| Completion     | `nvim-cmp`, `LuaSnip`                                             | Autocomplete va snippets                                   |
-| LSP            | `mason.nvim`, `mason-lspconfig.nvim`, `nvim-lspconfig`            | Cai va chay language servers                               |
-| Format         | `conform.nvim`                                                    | Format buffer bang Prettier, Stylua, Black, isort, gofumpt |
-| Treesitter     | `nvim-treesitter`, `nvim-treesitter-textobjects`                  | Highlight va textobjects tot hon                           |
-| Diagnostics    | `trouble.nvim`                                                    | Xem diagnostics/list loi ro rang                           |
-| Git            | `vim-fugitive`, `gitsigns.nvim`, `diffview.nvim`, `gitgraph.nvim` | Git status, blame, hunk, diff, graph                       |
-| Terminal       | `toggleterm.nvim`                                                 | Terminal ngang/doc/floating trong Neovim                   |
-| Session        | `persistence.nvim`                                                | Luu/restore workspace theo project                         |
-| Test           | `neotest`, `neotest-jest`, `neotest-vitest`                       | Chay Jest/Vitest                                           |
-| Debug          | `nvim-dap`, `dap-ui`, `dap-python`, `dap-go`, `dap-vscode-js`     | Debug JS/TS, Python, Go                                    |
-| Markdown       | `marksman`, Treesitter, Prettier                                  | Viet README/docs de hon                                    |
-| AI CLI         | `claude`, `codex`                                                 | Mo Claude/Codex trong Git root cua project                 |
-| Images         | `wezterm imgcat`                                                  | Preview anh trong terminal neu co WezTerm                  |
-| tmux           | `vim-tmux-navigator`                                              | Di chuyen giua tmux pane va Neovim split                   |
+| Group          | Plugin / Tool                                                     | Purpose                                               |
+| -------------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| Plugin manager | `lazy.nvim`                                                       | Install and manage plugins                            |
+| Theme          | `catppuccin`                                                      | Color theme                                           |
+| File tree      | `neo-tree.nvim`                                                   | Left-side project tree                                |
+| Search         | `telescope.nvim`, `ripgrep`, `fd`                                 | Find files, grep text, find buffers                   |
+| UI             | `lualine.nvim`, `bufferline.nvim`, `which-key.nvim`               | Statusline, buffer tabs, key hints                    |
+| Completion     | `nvim-cmp`, `LuaSnip`                                             | Completion and snippets                               |
+| LSP            | `mason.nvim`, `mason-lspconfig.nvim`, `nvim-lspconfig`            | Install and run language servers                      |
+| Format         | `conform.nvim`                                                    | Format with Prettier, Stylua, Black, isort, gofumpt   |
+| Treesitter     | `nvim-treesitter`, `nvim-treesitter-textobjects`                  | Better highlighting and textobjects                   |
+| Diagnostics    | `trouble.nvim`                                                    | Clear diagnostics and list views                      |
+| Git            | `vim-fugitive`, `gitsigns.nvim`, `diffview.nvim`, `gitgraph.nvim` | Git status, blame, hunks, diffs, graph                |
+| Terminal       | `toggleterm.nvim`                                                 | Horizontal, vertical, and floating terminals          |
+| Session        | `persistence.nvim`                                                | Save and restore project workspaces                   |
+| Test           | `neotest`, `neotest-jest`, `neotest-vitest`                       | Run Jest and Vitest                                   |
+| Debug          | `nvim-dap`, `dap-ui`, `dap-python`, `dap-go`, `dap-vscode-js`     | Debug JS/TS, Python, Go                               |
+| Markdown       | `marksman`, Treesitter, Prettier                                  | Better README and docs editing                        |
+| AI CLI         | `claude`, `codex`                                                 | Open Claude/Codex inside the current Git project root |
+| Images         | `wezterm imgcat`                                                  | Preview images in terminal when WezTerm is available  |
+| tmux           | `vim-tmux-navigator`                                              | Move between tmux panes and Neovim splits             |
 
-## Language Servers Va Formatters
+## Language Servers And Formatters
 
-| Ngon ngu / file         | LSP                            | Formatter / Tool          |
-| ----------------------- | ------------------------------ | ------------------------- |
-| Lua                     | `lua_ls`                       | `stylua`                  |
-| JavaScript / TypeScript | `ts_ls`                        | `prettier`                |
-| React / TSX             | `ts_ls`                        | `prettier`                |
-| HTML                    | `html`                         | `prettier`                |
-| CSS / Tailwind          | `cssls`, `tailwindcss`         | `prettier`                |
-| JSON                    | `jsonls`                       | `prettier`                |
-| Markdown                | `marksman`                     | `prettier`                |
-| Python                  | `pyright`                      | `isort`, `black`          |
-| Go                      | `gopls` neu co `go` trong PATH | `gofumpt`                 |
-| ESLint                  | `eslint`                       | code action / diagnostics |
+| Language / file         | LSP                            | Formatter / Tool         |
+| ----------------------- | ------------------------------ | ------------------------ |
+| Lua                     | `lua_ls`                       | `stylua`                 |
+| JavaScript / TypeScript | `ts_ls`                        | `prettier`               |
+| React / TSX             | `ts_ls`                        | `prettier`               |
+| HTML                    | `html`                         | `prettier`               |
+| CSS / Tailwind          | `cssls`, `tailwindcss`         | `prettier`               |
+| JSON                    | `jsonls`                       | `prettier`               |
+| Markdown                | `marksman`                     | `prettier`               |
+| Python                  | `pyright`                      | `isort`, `black`         |
+| Go                      | `gopls` if `go` exists in PATH | `gofumpt`                |
+| ESLint                  | `eslint`                       | code actions/diagnostics |
 
-## Bang Cu Phap / Phim Tat
+## Syntax / Keymap Reference
 
-`leader` la phim `Space`.
+`leader` is `Space`.
 
-### Mo File Va Tim Kiem
+### Files And Search
 
-| Phim       | Tac dung                            |
-| ---------- | ----------------------------------- |
-| `Space v`  | Bat/tat Neo-tree ben trai           |
-| `Space q`  | Reveal file hien tai trong Neo-tree |
-| `Space ff` | Tim file                            |
-| `Space fg` | Tim text trong project              |
-| `Space fb` | Tim buffer dang mo                  |
-| `Space fh` | Tim help tag                        |
+| Key        | Action                          |
+| ---------- | ------------------------------- |
+| `Space v`  | Toggle left Neo-tree            |
+| `Space q`  | Reveal current file in Neo-tree |
+| `Space ff` | Find file                       |
+| `Space fg` | Search text in project          |
+| `Space fb` | Find open buffer                |
+| `Space fh` | Find help tag                   |
 
-### Buffer
+### Buffers
 
-| Phim        | Tac dung                   |
-| ----------- | -------------------------- |
-| `Tab`       | Buffer tiep theo           |
-| `Shift Tab` | Buffer truoc               |
-| `Space bp`  | Pick buffer                |
-| `Space x`   | Dong buffer hien tai       |
-| `Space X`   | Force dong buffer hien tai |
-| `Space bo`  | Dong cac buffer khac       |
+| Key         | Action               |
+| ----------- | -------------------- |
+| `Tab`       | Next buffer          |
+| `Shift Tab` | Previous buffer      |
+| `Space bp`  | Pick buffer          |
+| `Space x`   | Close current buffer |
+| `Space X`   | Force close buffer   |
+| `Space bo`  | Close other buffers  |
 
-### Session Va Project
+### Sessions And Project
 
-| Phim       | Tac dung                          |
-| ---------- | --------------------------------- |
-| `Space ss` | Restore session cua cwd hien tai  |
-| `Space sS` | Chon session de restore           |
-| `Space sl` | Restore session gan nhat          |
-| `Space sd` | Dung luu session cho lan hien tai |
+| Key        | Action                          |
+| ---------- | ------------------------------- |
+| `Space ss` | Restore session for current cwd |
+| `Space sS` | Pick a session to restore       |
+| `Space sl` | Restore last session            |
+| `Space sd` | Stop saving this session        |
 
-### LSP Va Diagnostics
+### LSP And Diagnostics
 
-| Phim       | Tac dung                                       |
+| Key        | Action                                         |
 | ---------- | ---------------------------------------------- |
 | `K`        | Hover/documentation                            |
-| `gd`       | Di toi definition                              |
-| `gD`       | Di toi declaration                             |
-| `gi`       | Di toi implementation                          |
-| `gr`       | Tim references                                 |
+| `gd`       | Go to definition                               |
+| `gD`       | Go to declaration                              |
+| `gi`       | Go to implementation                           |
+| `gr`       | Find references                                |
 | `Space rn` | Rename symbol                                  |
 | `Space ca` | Code action                                    |
-| `Space lf` | Format buffer bang LSP/fallback                |
+| `Space lf` | Format buffer with LSP/fallback                |
 | `Space p`  | Format buffer                                  |
-| `[d`       | Diagnostic truoc                               |
-| `]d`       | Diagnostic tiep theo                           |
+| `[d`       | Previous diagnostic                            |
+| `]d`       | Next diagnostic                                |
 | `Space d`  | Diagnostic popup                               |
 | `Space ld` | Trouble workspace diagnostics                  |
 | `Space lD` | Trouble buffer diagnostics                     |
@@ -183,162 +178,162 @@ Codex, hoac tool he dieu hanh nao.
 
 ### Completion
 
-| Phim         | Tac dung                              |
-| ------------ | ------------------------------------- |
-| `Ctrl Space` | Goi autocomplete                      |
-| `Ctrl j`     | Chon item tiep theo                   |
-| `Ctrl k`     | Chon item truoc                       |
-| `Tab`        | Chon item tiep theo hoac nhay snippet |
-| `Shift Tab`  | Chon item truoc hoac lui snippet      |
-| `Enter`      | Xac nhan completion                   |
-| `Ctrl e`     | Huy completion                        |
-| `Ctrl b`     | Cuon docs len                         |
-| `Ctrl f`     | Cuon docs xuong                       |
+| Key          | Action                            |
+| ------------ | --------------------------------- |
+| `Ctrl Space` | Trigger completion                |
+| `Ctrl j`     | Select next item                  |
+| `Ctrl k`     | Select previous item              |
+| `Tab`        | Select next item or jump snippet  |
+| `Shift Tab`  | Select previous item or jump back |
+| `Enter`      | Confirm completion                |
+| `Ctrl e`     | Abort completion                  |
+| `Ctrl b`     | Scroll docs up                    |
+| `Ctrl f`     | Scroll docs down                  |
 
 ### Git
 
-| Phim       | Tac dung                                  |
-| ---------- | ----------------------------------------- |
-| `Space gg` | Mo Git Graph                              |
-| `Space gc` | Chuyen cwd vao Git root cua file hien tai |
-| `Space gw` | Xem cwd hien tai                          |
-| `Space gs` | Fugitive Git status                       |
-| `Space gb` | Fugitive Git blame                        |
-| `Space gC` | Fugitive Git commit                       |
-| `Space gl` | Git log ngan gon                          |
-| `Space gd` | Diffview thay doi hien tai                |
-| `Space gh` | History cua file hien tai                 |
-| `Space gH` | History cua repo                          |
-| `Space gq` | Dong Diffview                             |
-| `]h`       | Hunk tiep theo                            |
-| `[h`       | Hunk truoc                                |
-| `Space hs` | Stage hunk                                |
-| `Space hr` | Reset hunk                                |
-| `Space hp` | Preview hunk                              |
-| `Space hb` | Blame line                                |
+| Key        | Action                                |
+| ---------- | ------------------------------------- |
+| `Space gg` | Open Git Graph                        |
+| `Space gc` | Change cwd to current file's Git root |
+| `Space gw` | Show current cwd                      |
+| `Space gs` | Fugitive Git status                   |
+| `Space gb` | Fugitive Git blame                    |
+| `Space gC` | Fugitive Git commit                   |
+| `Space gl` | Compact Git log                       |
+| `Space gd` | Diffview current changes              |
+| `Space gh` | Current file history                  |
+| `Space gH` | Repository history                    |
+| `Space gq` | Close Diffview                        |
+| `]h`       | Next hunk                             |
+| `[h`       | Previous hunk                         |
+| `Space hs` | Stage hunk                            |
+| `Space hr` | Reset hunk                            |
+| `Space hp` | Preview hunk                          |
+| `Space hb` | Blame line                            |
 
 ### Terminal, Claude, Codex
 
-| Phim         | Tac dung                                |
-| ------------ | --------------------------------------- |
-| `Space tt`   | Terminal ngang                          |
-| `Space tf`   | Terminal floating                       |
-| `Space tv`   | Terminal doc ben phai                   |
-| `2 Space tt` | Terminal so 2 dang ngang                |
-| `3 Space tf` | Terminal so 3 dang floating             |
-| `4 Space tv` | Terminal so 4 dang doc                  |
-| `Ctrl \`     | Toggle terminal mac dinh cua ToggleTerm |
-| `Esc Esc`    | Thoat terminal mode ve normal mode      |
-| `Space ac`   | Mo Claude CLI trong Git root            |
-| `Space aC`   | Tiep tuc Claude CLI trong Git root      |
-| `Space ax`   | Mo Codex CLI trong Git root             |
-| `Space aX`   | Resume Codex CLI trong Git root         |
+| Key          | Action                             |
+| ------------ | ---------------------------------- |
+| `Space tt`   | Horizontal terminal                |
+| `Space tf`   | Floating terminal                  |
+| `Space tv`   | Right vertical terminal            |
+| `2 Space tt` | Terminal number 2, horizontal      |
+| `3 Space tf` | Terminal number 3, floating        |
+| `4 Space tv` | Terminal number 4, vertical        |
+| `Ctrl \`     | Toggle ToggleTerm default terminal |
+| `Esc Esc`    | Leave terminal mode                |
+| `Space ac`   | Open Claude CLI in Git root        |
+| `Space aC`   | Continue Claude CLI in Git root    |
+| `Space ax`   | Open Codex CLI in Git root         |
+| `Space aX`   | Resume Codex CLI in Git root       |
 
 ### Comment, Edit, Navigation
 
-| Phim               | Tac dung                                      |
-| ------------------ | --------------------------------------------- |
-| `gcc`              | Comment/uncomment dong hien tai               |
-| `gc` visual        | Comment/uncomment vung chon                   |
-| `ys{motion}{char}` | Them surround                                 |
-| `S{char}` visual   | Them surround cho vung chon                   |
-| `ds{char}`         | Xoa surround                                  |
-| `cs{old}{new}`     | Doi surround                                  |
-| `J` visual         | Di chuyen dong xuong                          |
-| `K` visual         | Di chuyen dong len                            |
-| `Space p` visual   | Paste de len vung chon ma khong mat clipboard |
-| `s`                | Flash jump                                    |
-| `Space S`          | Flash Treesitter node                         |
-| `af` / `if`        | Around/inside function                        |
-| `ac` / `ic`        | Around/inside class                           |
-| `]m` / `[m`        | Function tiep theo/truoc do                   |
-| `]]` / `[[`        | Class tiep theo/truoc do                      |
+| Key                | Action                                       |
+| ------------------ | -------------------------------------------- |
+| `gcc`              | Comment/uncomment current line               |
+| `gc` visual        | Comment/uncomment selection                  |
+| `ys{motion}{char}` | Add surround                                 |
+| `S{char}` visual   | Add surround to selection                    |
+| `ds{char}`         | Delete surround                              |
+| `cs{old}{new}`     | Change surround                              |
+| `J` visual         | Move selected lines down                     |
+| `K` visual         | Move selected lines up                       |
+| `Space p` visual   | Paste over selection without losing register |
+| `s`                | Flash jump                                   |
+| `Space S`          | Flash Treesitter node                        |
+| `af` / `if`        | Around/inside function                       |
+| `ac` / `ic`        | Around/inside class                          |
+| `]m` / `[m`        | Next/previous function                       |
+| `]]` / `[[`        | Next/previous class                          |
 
 ### Images
 
-| Phim       | Tac dung                                    |
-| ---------- | ------------------------------------------- |
-| `Space ip` | Preview image bang `wezterm imgcat`         |
-| `Space io` | Mo image bang app mac dinh cua he dieu hanh |
+| Key        | Action                              |
+| ---------- | ----------------------------------- |
+| `Space ip` | Preview image with `wezterm imgcat` |
+| `Space io` | Open image with the OS default app  |
 
 ### Debug
 
-| Phim        | Tac dung                       |
-| ----------- | ------------------------------ |
-| `Space db`  | Toggle breakpoint              |
-| `Space dB`  | Conditional breakpoint         |
-| `Space dL`  | Log point                      |
-| `Space dc`  | Start/continue debug           |
-| `Space do`  | Step over                      |
-| `Space di`  | Step into                      |
-| `Space dO`  | Step out                       |
-| `Space dp`  | Pause debug                    |
-| `Space dt`  | Terminate debug                |
-| `Space dl`  | Chay lai debug config gan nhat |
-| `Space dr`  | Mo debug REPL                  |
-| `Space du`  | Toggle debug UI                |
-| `Space de`  | Eval expression                |
-| `Space dPm` | Debug Python method gan cursor |
-| `Space dPc` | Debug Python class gan cursor  |
-| `Space dPs` | Debug Python visual selection  |
-| `Space dGt` | Debug Go test gan cursor       |
-| `Space dGl` | Debug lai Go test gan nhat     |
+| Key         | Action                        |
+| ----------- | ----------------------------- |
+| `Space db`  | Toggle breakpoint             |
+| `Space dB`  | Conditional breakpoint        |
+| `Space dL`  | Log point                     |
+| `Space dc`  | Start/continue debug          |
+| `Space do`  | Step over                     |
+| `Space di`  | Step into                     |
+| `Space dO`  | Step out                      |
+| `Space dp`  | Pause debug                   |
+| `Space dt`  | Terminate debug               |
+| `Space dl`  | Rerun last debug config       |
+| `Space dr`  | Open debug REPL               |
+| `Space du`  | Toggle debug UI               |
+| `Space de`  | Evaluate expression           |
+| `Space dPm` | Debug nearest Python method   |
+| `Space dPc` | Debug nearest Python class    |
+| `Space dPs` | Debug Python visual selection |
+| `Space dGt` | Debug nearest Go test         |
+| `Space dGl` | Debug last Go test again      |
 
-### Test JavaScript / TypeScript
+### JavaScript / TypeScript Tests
 
-| Phim       | Tac dung                        |
-| ---------- | ------------------------------- |
-| `Space nn` | Chay test gan cursor            |
-| `Space nf` | Chay test file hien tai         |
-| `Space nA` | Chay tat ca test trong cwd      |
-| `Space nl` | Chay lai test gan nhat          |
-| `Space nd` | Debug test gan cursor bang DAP  |
-| `Space ns` | Toggle test summary             |
-| `Space no` | Mo output test gan nhat         |
-| `Space nO` | Toggle output panel             |
-| `Space nx` | Dung test gan nhat              |
-| `Space nw` | Toggle watch test file hien tai |
+| Key        | Action                        |
+| ---------- | ----------------------------- |
+| `Space nn` | Run nearest test              |
+| `Space nf` | Run current test file         |
+| `Space nA` | Run all tests in cwd          |
+| `Space nl` | Run last test again           |
+| `Space nd` | Debug nearest test with DAP   |
+| `Space ns` | Toggle test summary           |
+| `Space no` | Open nearest test output      |
+| `Space nO` | Toggle output panel           |
+| `Space nx` | Stop nearest test             |
+| `Space nw` | Toggle watch for current file |
 
-### Lenh Hay Dung
+### Useful Commands
 
-| Lenh                   | Tac dung                          |
+| Command                | Action                            |
 | ---------------------- | --------------------------------- |
-| `:Lazy`                | Quan ly plugin                    |
-| `:Mason`               | Quan ly LSP/formatter/debugger    |
-| `:MasonToolsInstall`   | Cai tool Mason thieu              |
-| `:TSUpdate`            | Cap nhat Treesitter parsers       |
-| `:ConformInfo`         | Xem formatter cua buffer          |
-| `:Trouble diagnostics` | Mo diagnostics bang Trouble       |
+| `:Lazy`                | Manage plugins                    |
+| `:Mason`               | Manage LSP/formatters/debuggers   |
+| `:MasonToolsInstall`   | Install missing Mason tools       |
+| `:TSUpdate`            | Update Treesitter parsers         |
+| `:ConformInfo`         | Inspect formatter for buffer      |
+| `:Trouble diagnostics` | Open diagnostics in Trouble       |
 | `:Git`                 | Fugitive Git status               |
 | `:Git blame`           | Git blame                         |
 | `:DapContinue`         | Start/continue debug              |
 | `:DapToggleBreakpoint` | Toggle breakpoint                 |
-| `:NvimConfigCheck`     | Kiem tra config tren may hien tai |
+| `:NvimConfigCheck`     | Check this config on this machine |
 
-## Workflow Ngan
+## Short Workflow
 
 ```bash
 cd path/to/project
 nvim .
 ```
 
-Trong Neovim:
+Inside Neovim:
 
-1. `Space v` de mo cay file.
-2. `Space ff` de tim file.
-3. `Space fg` de grep text.
-4. `gd`, `K`, `Space ca`, `Space rn` de lam viec voi LSP.
-5. `Space p` de format.
-6. `Space gs` de xem Git status.
-7. `Space tt` de mo terminal.
-8. `Space nn` hoac `Space nf` de chay test.
-9. `Space db`, `Space dc`, `Space du` de debug.
-10. `Space ac` hoac `Space ax` neu muon goi Claude/Codex trong project.
+1. `Space v` opens the file tree.
+2. `Space ff` finds files.
+3. `Space fg` greps project text.
+4. `gd`, `K`, `Space ca`, `Space rn` use LSP.
+5. `Space p` formats.
+6. `Space gs` opens Git status.
+7. `Space tt` opens a terminal.
+8. `Space nn` or `Space nf` runs tests.
+9. `Space db`, `Space dc`, `Space du` debug.
+10. `Space ac` or `Space ax` opens Claude/Codex in the project.
 
-## Ghi Chu
+## Notes
 
-- `lazy-lock.json` duoc commit de giu version plugin on dinh.
-- Cau hinh rieng tung may nen de trong `lua/local.lua`, khong commit len repo.
-- `tmux` la optional, Windows native van dung tot voi ToggleTerm.
-- Go tools chi duoc cai khi may co `go` trong PATH.
-- Claude va Codex la optional CLI; config nay chi mo terminal dung thu muc, khong luu token hay API key.
+- `lazy-lock.json` is committed to keep plugin versions stable.
+- Machine-specific config should go in `lua/local.lua` and should not be committed.
+- `tmux` is optional. Windows native works fine with ToggleTerm.
+- Go tools are installed only when `go` exists in PATH.
+- Claude and Codex are optional CLIs. This config only opens the right terminal directory; it does not store tokens or API keys.
