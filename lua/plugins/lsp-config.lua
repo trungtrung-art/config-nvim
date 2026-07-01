@@ -27,6 +27,7 @@ return {
 				"cssls",
 				"tailwindcss",
 				"jsonls",
+				"marksman",
 				"pyright",
 				"eslint",
 			}
@@ -52,6 +53,7 @@ return {
 				"css-lsp",
 				"tailwindcss-language-server",
 				"json-lsp",
+				"marksman",
 				"pyright",
 				"eslint-lsp",
 				"stylua",
@@ -102,6 +104,7 @@ return {
 				cssls = {},
 				tailwindcss = {},
 				jsonls = {},
+				marksman = {},
 				pyright = {},
 				eslint = {},
 				gopls = {},

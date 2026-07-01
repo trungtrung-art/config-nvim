@@ -1,8 +1,9 @@
 # Neovim Config
 
 Personal Neovim configuration focused on frontend development, Git workflows,
-LSP, formatting, Treesitter, Telescope, navigation, tests, debugging, session
-restore, terminal usage, and cross-platform use.
+LSP, formatting, Treesitter, Telescope, navigation, tests, debugging, Markdown
+docs, session restore, terminal usage, optional Claude/Codex CLI workflow, and
+cross-platform use.
 
 ## Status
 
@@ -27,11 +28,13 @@ Optional but recommended:
 - Go, if you work on Go projects
 - tmux
 - WezTerm
+- Claude Code CLI, if you want Claude inside project terminals
+- Codex CLI, if you want Codex inside project terminals
 
 Mason installs the configured language servers, formatters, and debug adapters
 on first run where possible, including Lua, TypeScript, HTML, CSS, Tailwind,
-JSON, Python, ESLint, Stylua, Prettier, Black, isort, the JavaScript debug
-adapter, and debugpy. If `go` is available in `PATH`, Mason also installs
+JSON, Markdown, Python, ESLint, Stylua, Prettier, Black, isort, the JavaScript
+debug adapter, Marksman, and debugpy. If `go` is available in `PATH`, Mason also installs
 `gopls`, `gofumpt`, and Delve.
 
 ## Install
@@ -156,6 +159,24 @@ The config includes lightweight OS detection in `lua/core/os.lua`.
 - Inline image preview uses WezTerm `imgcat` when the `wezterm` CLI is
   available, otherwise it opens the image with the operating system.
 
+## Terminal And AI Assistants
+
+Integrated terminals use `toggleterm.nvim` and open in the current Neovim `cwd`.
+Use `Space gc` first if you want to move Neovim's `cwd` to the current Git root.
+
+Common keymaps:
+
+- `Space tt` opens a horizontal terminal.
+- `Space tf` opens a floating terminal.
+- `Space tv` opens a vertical terminal.
+- `Space ac` opens Claude in the current Git root, falling back to `cwd`.
+- `Space aC` continues the last Claude conversation in the project root.
+- `Space ax` opens Codex in the current Git root, falling back to `cwd`.
+- `Space aX` resumes Codex in the project root.
+
+Claude and Codex are optional CLI workflows. Install and authenticate those tools
+outside Neovim; this config only opens them in the right project directory.
+
 ## Sessions
 
 Project sessions are managed by `persistence.nvim`.
@@ -236,23 +257,34 @@ Run:
 :NvimConfigCheck
 ```
 
-This is an alias for:
-
-```vim
-:checkhealth config
-```
+This command runs the config health provider directly.
 
 It checks:
 
 - Neovim version.
 - Required executables such as Git, Node.js, npm, Python, ripgrep, fd, and
   unzip.
-- Optional executables such as Go, tmux, and WezTerm.
+- Optional executables such as Go, tmux, WezTerm, Claude Code, and Codex CLI.
 - OS-specific helpers for Windows, WSL, macOS, and Linux.
-- Mason packages used by LSP, formatting, debugging, and JS/TS tooling.
+- Mason packages used by LSP, formatting, Markdown, debugging, and JS/TS tooling.
 - Treesitter parsers used by this config.
 - Current project context, including Git root and Jest/Vitest signals when
   `package.json` exists.
+
+
+## Markdown And Docs
+
+Markdown files use Treesitter highlighting for `markdown` and `markdown_inline`,
+Marksman LSP for document intelligence, and Prettier formatting through
+`conform.nvim`.
+
+Useful workflow:
+
+```bash
+nvim README.md
+```
+
+Then use normal LSP keymaps such as `K`, `gd`, `Space ca`, and `Space p`.
 
 ## Debugging
 

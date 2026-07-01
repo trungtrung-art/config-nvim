@@ -168,6 +168,10 @@ Lenh tuong duong neu muon go tay:
 | `4 Space tv` | Bat/tat terminal so 4 dang doc ben phai |
 | `Ctrl \` | Bat/tat terminal theo mapping mac dinh cua ToggleTerm |
 | `Esc Esc` | Thoat terminal mode ve normal mode |
+| `Space ac` | Mo Claude CLI trong Git root cua project |
+| `Space aC` | Tiep tuc Claude CLI trong Git root cua project |
+| `Space ax` | Mo Codex CLI trong Git root cua project |
+| `Space aX` | Resume Codex CLI trong Git root cua project |
 
 Trong terminal:
 
@@ -243,6 +247,18 @@ Ho tro cac dinh dang thong dung: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg`, `bm
 | `]m` / `[m` | Nhay toi function tiep theo/truoc do |
 | `]]` / `[[` | Nhay toi class tiep theo/truoc do |
 
+
+## Markdown Va Docs
+
+Markdown dung Treesitter, Marksman LSP va Prettier qua Conform.
+
+| Phim | Tac dung |
+| --- | --- |
+| `K` | Xem hover/documentation neu Marksman co thong tin |
+| `gd` | Di toi definition/link reference neu LSP ho tro |
+| `Space ca` | Code action |
+| `Space p` | Format Markdown bang Prettier |
+
 ## Debug
 
 | Phim | Tac dung |
@@ -300,8 +316,7 @@ Config nay dung Neotest cho Jest va Vitest.
 | `:Lazy` | Quan ly plugin |
 | `:Mason` | Quan ly LSP/formatter/debugger |
 | `:checkhealth` | Kiem tra suc khoe config |
-| `:checkhealth config` | Kiem tra rieng bo config nay |
-| `:NvimConfigCheck` | Alias de chay `:checkhealth config` |
+| `:NvimConfigCheck` | Chay health check rieng bo config nay |
 | `:Neotree toggle left` | Bat/tat Neo-tree bang command |
 | `:Git` | Mo Fugitive Git status |
 | `:Git blame` | Mo blame cua file hien tai |

@@ -16,6 +16,8 @@ local optional_executables = {
 	{ label = "Go", commands = { "go" }, reason = "Go LSP, formatter, and debug workflows" },
 	{ label = "tmux", commands = { "tmux" }, reason = "optional terminal multiplexer workflow" },
 	{ label = "WezTerm", commands = { "wezterm" }, reason = "optional inline image preview" },
+	{ label = "Claude Code", commands = { "claude" }, reason = "optional AI assistant terminal workflow" },
+	{ label = "Codex CLI", commands = { "codex" }, reason = "optional AI assistant terminal workflow" },
 }
 
 local treesitter_parsers = {
@@ -26,9 +28,9 @@ local treesitter_parsers = {
 	"typescript",
 	"tsx",
 	"html",
-	"css",
 	"json",
-	"python",
+	"markdown",
+	"markdown_inline",
 	"go",
 }
 
@@ -80,6 +82,7 @@ local function mason_packages()
 		"css-lsp",
 		"tailwindcss-language-server",
 		"json-lsp",
+		"marksman",
 		"pyright",
 		"eslint-lsp",
 		"stylua",
@@ -260,6 +263,7 @@ local function check_project_context()
 
 	local cwd = vim.fn.getcwd()
 	info("cwd: " .. cwd)
+	info("shell: " .. vim.o.shell)
 
 	local git_root = vim.fn.systemlist({ "git", "-C", cwd, "rev-parse", "--show-toplevel" })
 	if vim.v.shell_error == 0 and git_root[1] then

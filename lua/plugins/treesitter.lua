@@ -16,6 +16,8 @@ return {
 					"typescript",
 					"tsx",
 					"html",
+					"markdown",
+					"markdown_inline",
 					"go",
 					"gomod",
 					"gowork",
